@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="pcc-kb-sha256" content="0af9773e66266980bf04302694cf26320e5c3abfb54ce99f30d7f619bae6a94b">
+<title>PCC — คลินิกวางแผนก่อนมีบุตร</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A9%BA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  if (window.tailwind) tailwind.config = {
+    theme: { extend: {
+      fontFamily: { sans: ["Sarabun", "Leelawadee UI", "Thonburi", "Noto Sans Thai", "sans-serif"] },
+      colors: { peach: "#FDF0E8" }
+    } }
+  };
+</script>
+<style>
+  body{font-family:"Sarabun","Leelawadee UI","Thonburi","Noto Sans Thai",sans-serif;background:#FDF0E8;color:#374151;-webkit-font-smoothing:antialiased}
+  :focus-visible{outline:3px solid #F97316;outline-offset:2px;border-radius:8px}
+  .card{background:rgba(255,255,255,.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid #F5DCC8;border-radius:18px;box-shadow:0 1px 2px rgba(124,45,18,.05),0 10px 30px rgba(124,45,18,.06);padding:20px}
+  .h2{font-size:1.15rem;font-weight:700;color:#1F2937;line-height:1.35}
+  .h3{font-size:1rem;font-weight:700;color:#1F2937}
+  .hint{font-size:.85rem;color:#6B7280;margin-top:2px}
+  .lbl{display:block;font-size:.88rem;font-weight:600;color:#4B5563;margin-bottom:4px}
+  .inp{background:#fff;border:1px solid #F1D5BF;border-radius:10px;padding:9px 12px;font-size:1rem}
+  .btn{border:1px solid #F1D5BF;background:#fff;border-radius:12px;padding:10px 18px;font-weight:600;color:#1F2937;min-height:44px}
+  .btn:hover{border-color:#FDBA74}
+  .btn-primary{background:linear-gradient(135deg,#FB923C,#F97316);color:#fff;border:none;border-radius:12px;padding:10px 22px;font-weight:600;min-height:44px;box-shadow:0 2px 8px rgba(249,115,22,.3)}
+  .btn-primary:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid #F1D5BF;border-radius:14px;padding:12px 14px;min-height:56px;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:#FDBA74}
+  .opt-on{border-color:#F97316;background:#FFF1E6;box-shadow:inset 0 0 0 1px #F97316}
+  .chk{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid #F5E1D2;border-radius:12px;padding:10px 12px;cursor:pointer}
+  .chk-on{border-color:#F97316;background:#FFF7F0}
+  .crit{background:#fff;border-radius:12px;padding:10px 12px;border-top:1px solid #F5E1D2;border-right:1px solid #F5E1D2;border-bottom:1px solid #F5E1D2}
+  .crit.chk-on{background:#FFF7F0}
+  .seg{display:inline-flex;border:1px solid #F1D5BF;border-radius:10px;overflow:hidden}
+  .seg button{padding:6px 12px;font-size:.88rem;background:#fff;min-height:36px}
+  .seg button+button{border-left:1px solid #F1D5BF}
+  .seg .seg-on{background:#F97316;color:#fff;font-weight:600}
+  .tab{padding:8px 12px;border-radius:12px;font-weight:600;font-size:.92rem;color:#4B5563;white-space:nowrap}
+  .tab:hover{background:#FFEDD5}
+  .tab-on{background:linear-gradient(135deg,#FB923C,#F97316);color:#fff}
+  .tab-on:hover{background:linear-gradient(135deg,#FB923C,#F97316)}
+  .logo{background:#F97316;color:#fff;font-weight:700;border-radius:9px;padding:4px 9px;font-size:.9rem}
+  .print-only{display:none}
+  @media print{
+    body{background:#fff}
+    header,.no-print{display:none!important}
+    .card{box-shadow:none;border:1px solid #bbb;background:#fff;backdrop-filter:none;break-inside:avoid;padding:12px}
+    .print-only{display:block!important}
+    a{color:#000;text-decoration:none}
+  }
+  @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body class="min-h-screen">
+<div id="kbBanner"></div>
+<header class="sticky top-0 z-30 border-b border-orange-100 bg-[#FDF0E8]/90 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
+    <div class="flex items-center gap-2">
+      <span class="logo">PCC</span>
+      <div>
+        <div class="font-bold leading-tight text-gray-800">คลินิกวางแผนก่อนมีบุตร</div>
+        <div class="text-xs text-gray-500">Preconception Care Clinic Assistant</div>
+      </div>
+    </div>
+    <nav class="ml-auto flex gap-1 overflow-x-auto" aria-label="เมนูหลัก">
+      <a class="tab" href="#/assess" data-route="assess">ประเมิน</a>
+      <a class="tab" href="#/ref" data-route="ref">อ้างอิง</a>
+      <a class="tab" href="#/tools" data-route="tools">เครื่องมือ</a>
+      <a class="tab" href="#/kb" data-route="kb">KB</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app" class="mx-auto max-w-6xl px-4 py-6" aria-live="polite"></main>
+
+<footer class="mx-auto max-w-6xl px-4 pb-10 text-xs text-gray-500">
+  เครื่องมือช่วยตัดสินใจ ไม่ใช้แทนดุลยพินิจแพทย์ · ไม่เก็บและไม่ส่งข้อมูลผู้ป่วย · KB v0.2.0 · © BUGpairoj Group
+</footer>
+
+<script type="application/json" id="kb-data">{"meta":{"kb_id":"PCC-KB","version":"0.2.0","status":"REVIEW","created":"2026-09-21","reviewed_by":null,"review_date":null,"source":{"title_th":"คู่มือการเตรียมความพร้อมก่อนตั้งครรภ์ สำหรับหญิงที่มีโรคประจำตัว (Preconception Care Guideline) เขตสุขภาพที่ 9","publisher":"ศูนย์อนามัยที่ 9 นครราชสีมา กรมอนามัย","file_modified":"2022-11-25","page_ref_note":"src ทุกจุดอ้างเลขหน้าของไฟล์ PDF (ไม่ใช่เลขหน้าในสารบัญ) เพื่อให้ผู้ review เปิดตรวจได้ทันที"},"levels":{"RED":"ห้าม/ไม่แนะนำให้ตั้งครรภ์ในขณะนี้","YELLOW":"ควรเลื่อนการตั้งครรภ์ / ต้องปรับการรักษาหรือส่งปรึกษาก่อน","GREEN":"พร้อมเตรียมตั้งครรภ์","INFO":"ไม่เปลี่ยนระดับความเสี่ยง แต่มีผลต่อ plan, lab หรือการเลือกวิธีคุมกำเนิด"},"review_flag_types":{"SOURCE_TYPO":"คู่มือพิมพ์ผิด/ตัวเลขผิด — KB ใช้ค่าที่แก้แล้ว ต้องยืนยัน","INTERNAL_CONFLICT":"คู่มือขัดกันเองระหว่างหน้า — KB เลือกค่าที่ระวังกว่า ต้องตัดสิน","DIFFERS_FROM_WHO_MEC":"ค่าในคู่มือไม่ตรงกับ WHO MEC 5th ed. 2015 ที่คู่มืออ้างอิง — KB ใช้ค่าตามคู่มือ ต้องตัดสิน","OUTDATED":"ข้อมูลอาจล้าสมัย ต้องอัปเดต","UNCLEAR":"ข้อความในคู่มือกำกวม","DESIGN_DECISION":"คู่มือไม่ได้ระบุ — เป็นการออกแบบของระบบ ต้องให้ clinical owner รับรอง","EXTERNAL_SOURCE":"ข้อมูลไม่ได้มาจากคู่มือ","PENDING":"ตัดสินแล้ว แต่รอข้อมูลภายนอกก่อนแก้ค่าใน KB"},"out_of_scope":[{"chapter":"4.2","topic":"การรักษา maternal sepsis (bundle, antibiotic)","reason":"เป็นการดูแลขณะตั้งครรภ์/ฉุกเฉิน ไม่ใช่งานคลินิกก่อนตั้งครรภ์ — เก็บเฉพาะ score ไว้ใน tools","src":"p.27-37"},{"chapter":"6","topic":"ระบบรายงานมารดาตายเขตสุขภาพที่ 9","reason":"เป็นงานรายงานระดับเขต ไม่ใช่งานของแพทย์คลินิก","src":"p.73-81"}],"updated":"2026-09-22","decisions_source":{"document":"ใบตัดสินประเด็นทางคลินิก (PCC-CD) 26 ข้อ","date":"2026-09-22","decided_by":null,"note":"ยังไม่ระบุชื่อผู้ตัดสิน — ต้องกรอกก่อนเปลี่ยนสถานะเป็น APPROVED"},"mec_reference":{"policy":"WHO MEC 6th ed. (2025)","status":"PENDING","interim":"ใช้ค่าคู่มือ (WHO MEC 2015) และแก้เฉพาะแถวที่ตัดสินใน CD-04 ถึง CD-22 โดยอิง U.S. MEC 2024","decision":{"cd":"CD-00","choice":"C","date":"2026-09-22","evidence":[{"src":"WHO MEC 6th ed. (2025)","text":"WHO เผยแพร่ MEC ฉบับที่ 6 เมื่อ 3 พ.ย. 2025","url":"https://www.who.int/publications/i/item/9789240115583"},{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"ตารางสรุปครบทุกแถว ใช้เทียบระหว่างรอฉบับ WHO","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},"pending":[{"id":"PEND-01","cd":"CD-00","task":"จัดหา WHO MEC 6th ed. ฉบับเต็มและถอดตารางเทียบทุกแถว","blocking":false},{"id":"PEND-02","cd":"CD-25","task":"ถอดตาราง mWHO 2.0 (Table 6) จาก ESC 2025 ฉบับเต็ม แล้วทบทวน CARD-R05 / CARD-Y06","blocking":false},{"id":"PEND-03","cd":"CD-17","task":"กรอกปลายทางส่งปรึกษาจริงของ รพ. ใน config.consult_targets","blocking":true},{"id":"PEND-04","cd":"-","task":"ระบุชื่อผู้ตัดสิน (meta.reviewed_by) และวันที่รับรอง","blocking":true},{"id":"PEND-05","cd":"CD-14","task":"เภสัชกรกำหนดระยะหยุด isotretinoin ก่อนตั้งครรภ์","blocking":false},{"id":"PEND-06","cd":"CD-00","task":"ทบทวน MEC-VTE-PAST: U.S. MEC 2024 ให้ thrombophilia DMPA = 3 (คู่มือ 2)","blocking":false}]},"config":{"consult_targets":{"CARDIO":{"label":"อายุรแพทย์โรคหัวใจ / Pregnancy heart team","destination":"TBD — กำหนดปลายทางจริงของ รพ."},"MED":{"label":"อายุรแพทย์","destination":"TBD"},"ENDO":{"label":"อายุรแพทย์ต่อมไร้ท่อ","destination":"TBD"},"RHEUM":{"label":"อายุรแพทย์โรคข้อและรูมาติสซั่ม","destination":"TBD"},"HEMATO":{"label":"อายุรแพทย์โรคเลือด","destination":"TBD"},"OB":{"label":"สูติแพทย์","destination":"TBD"},"EYE":{"label":"จักษุแพทย์","destination":"TBD"},"PSY":{"label":"จิตแพทย์","destination":"TBD"},"NEPHRO":{"label":"อายุรแพทย์โรคไต","destination":"TBD"}},"clinics":{"PRECONCEPTION":"Preconception care clinic","FAMILY_PLANNING":"Family planning clinic (คลินิกวางแผนครอบครัว)","ANC_HIGH_RISK":"ANC — High risk clinic"}},"intention":{"question_th":"คุณต้องการตั้งครรภ์ภายในช่วง 1 ปีข้างหน้านี้หรือไม่","question_en":"Would you like (do you want) to become pregnant in the next year?","note":"หลีกเลี่ยงคำว่า \"วางแผน\" และควรถามเป็นประจำ (ask routinely) เพราะความตั้งใจเปลี่ยนได้ตลอด","answers":[{"id":"YES","label":"ใช่","route":"PRECONCEPTION_ASSESS"},{"id":"EITHER","label":"ยังไงก็ได้","route":"BOTH","decision":{"cd":"CD-11","choice":"A","date":"2026-09-22","evidence":[{"src":"Power to Decide — One Key Question","text":"One Key Question มี 4 คำตอบ: Yes / No / Ok either way / Unsure","url":"https://www.powertodecide.org/sites/default/files/2021-09/One%20Key%20Question_Overview.pdf"},{"src":"Iowa HHS — OKQ policy","text":"ให้บริการ preconception, contraception หรือทั้งสองอย่างตามคำตอบ","url":"https://hhs.iowa.gov/media/13245/download"}]}},{"id":"UNSURE","label":"ไม่แน่ใจ","route":"BOTH","decision":{"cd":"CD-11","choice":"A","date":"2026-09-22","evidence":[{"src":"Power to Decide — One Key Question","text":"One Key Question มี 4 คำตอบ: Yes / No / Ok either way / Unsure","url":"https://www.powertodecide.org/sites/default/files/2021-09/One%20Key%20Question_Overview.pdf"},{"src":"Iowa HHS — OKQ policy","text":"ให้บริการ preconception, contraception หรือทั้งสองอย่างตามคำตอบ","url":"https://hhs.iowa.gov/media/13245/download"}]}},{"id":"NO","label":"ไม่","route":"CONTRACEPTION"}],"src":"p.6-7, p.72"},"pathways":{"not_pregnant":{"PRECONCEPTION_ASSESS":{"GREEN":{"clinic":"PRECONCEPTION","action":"ส่ง Preconception care clinic รับยา Folic/Ferrous หรือ Triferdine พร้อม lab พื้นฐาน"},"YELLOW":{"clinic":["FAMILY_PLANNING","PRECONCEPTION"],"action":"คุมกำเนิดชั่วคราว (พิจารณา LARC) + เริ่ม folic acid + ส่งปรึกษาตามโรค + นัดประเมินซ้ำเมื่อปรับการรักษาแล้ว","meds":["Folic acid 1x1 (เบาหวาน: 5 mg/วัน)"],"decision":{"cd":"CD-10","choice":"C","date":"2026-09-22","evidence":[{"src":"ADA Standards of Care 2024 §15","text":"ADA 15.2: คุมกำเนิดที่มีประสิทธิภาพ (พิจารณา LARC) จนกว่าแผนการรักษาและ A1C จะเหมาะกับการตั้งครรภ์","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC10725801/"},{"src":"NICE NG3 — Diabetes in pregnancy","text":"NICE NG3 ให้ส่ง nephrologist ก่อนหยุดคุมกำเนิด — หลักคุมกำเนิดระหว่างปรับการรักษา","url":"https://www.nice.org.uk/guidance/ng3/chapter/Recommendations"}]}},"RED":{"clinic":"FAMILY_PLANNING","action":"ส่ง Family planning clinic เลือกวิธีคุมกำเนิดประสิทธิภาพสูง พิจารณาคุมกำเนิดถาวรตามความสมัครใจ"}},"CONTRACEPTION":{"EVER_SEX":{"clinic":"FAMILY_PLANNING","action":"ส่ง Family planning clinic เพื่อคุมกำเนิด"},"NEVER_SEX":{"clinic":null,"action":"ให้คำแนะนำ หากมีเพศสัมพันธ์ให้มาปรึกษาแพทย์เพื่อคุมกำเนิด"}},"src":"p.71-72"},"pregnant":{"ga_cutoff_weeks":24,"register":"ลงทะเบียนที่ ANC (High risk) เพื่อส่งต่อข้อมูลแก่ทีมแพทย์ LR และ Ward","CAN_CONTINUE":{"clinic":"ANC_HIGH_RISK","action":"อายุรแพทย์หรือจิตแพทย์ดูแลร่วมกับสูติแพทย์ พิจารณา Interdepartment conference ในบางราย เขียน plan การรักษาลงสมุด ANC และ HOSxP"},"CANNOT_CONTINUE_LT_CUTOFF":{"action":"ส่งปรึกษาสูติแพทย์เพื่อยุติการตั้งครรภ์ และให้บริการคุมกำเนิดหรือทำหมันตามความเหมาะสม"},"CANNOT_CONTINUE_GE_CUTOFF":{"action":"Interdepartment conference (อายุรแพทย์ สูติแพทย์ กุมารแพทย์) และ Family conference ร่วมกับครอบครัว เพื่อวางแผนการคลอดและคุมกำเนิดถาวร"},"mapping_note":"CANNOT_CONTINUE = ผลประเมินระดับ RED","src":"p.72, p.8"}},"base_plan":{"ready_meds":["Triferdine 1x1","Folic acid 1x1"],"ready_meds_alt":"หรือ Folic acid + Ferrous แยกกัน","base_labs":["CBC","BUN","Cr","VDRL","HBsAg","Anti-HIV","Thalassemia screening","Blood group","Pap smear"],"lifestyle_counseling":["โภชนาการและ BMI — BMI ต่ำเสี่ยง LBW/preterm; อ้วนเสี่ยงมีบุตรยาก, GDM, PIH, macrosomia","Folic / Ferrous / Iodine — ป้องกัน neural tube defect, ซีด, ขาดไอโอดีน","งดสูบบุหรี่ แอลกอฮอล์ และสารเสพติด","ทบทวนยาที่ใช้ — ยาหลายชนิด teratogenic และมักตรวจพบการตั้งครรภ์หลังช่วงสร้างอวัยวะไปแล้ว"],"src":"p.6-7, p.53, p.59, p.71"},"general_modifiers":[{"id":"GEN-I01","level":"INFO","label":"BMI ≥ 30 kg/m²","mec":["MEC-BMI30"],"counsel":"เสี่ยงมีบุตรยาก GDM PIH macrosomia preterm","src":"p.7, p.63"},{"id":"GEN-I02","level":"INFO","label":"BMI ต่ำ","counsel":"เสี่ยง LBW และ preterm","src":"p.7"},{"id":"GEN-I03","level":"INFO","label":"สูบบุหรี่ / ดื่มแอลกอฮอล์ / ใช้สารเสพติด","counsel":"เสี่ยง neural tube defect, fetal alcohol syndrome, birth defect — แนะนำเลิกก่อนตั้งครรภ์","src":"p.7"},{"id":"GEN-I04","level":"INFO","label":"อายุ \u003c 20 ปี (teenage)","counsel":"ให้คำปรึกษาเรื่อง teenage pregnancy","src":"p.7"},{"id":"GEN-I05","level":"INFO","label":"Myoma uteri / Ovarian cyst / Ovarian tumor","counsel":"myoma เพิ่มความเสี่ยงตกเลือดหลังคลอดและ obstructed labor","consult":"OB","src":"p.6-7"},{"id":"GEN-I06","level":"INFO","label":"HIV / Hepatitis B / Syphilis / ไม่มีภูมิ Rubella","counsel":"ตรวจพบก่อนตั้งครรภ์และดูแลที่เหมาะสมจะลดภาวะแทรกซ้อนมารดาและทารก","consult":"MED","src":"p.6-7"},{"id":"GEN-I07","level":"INFO","label":"สูบบุหรี่ \u003c 15 มวน/วัน และอายุ ≥ 35 ปี","mec":["MEC-SMOKE35-LT15"],"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"SMOKE35+MIGRAINE","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"สูบบุหรี่และอายุ ≥ 35 → CHC 3 (\u003c 15 มวน/วัน) หรือ 4 (≥ 15 มวน/วัน) · migraine with aura → CHC 4","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"GEN-I08","level":"INFO","label":"สูบบุหรี่ ≥ 15 มวน/วัน และอายุ ≥ 35 ปี","mec":["MEC-SMOKE35-GE15"],"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"SMOKE35+MIGRAINE","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"สูบบุหรี่และอายุ ≥ 35 → CHC 3 (\u003c 15 มวน/วัน) หรือ 4 (≥ 15 มวน/วัน) · migraine with aura → CHC 4","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"GEN-I09","level":"INFO","label":"Migraine with aura","mec":["MEC-MIGRAINE-AURA"],"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"SMOKE35+MIGRAINE","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"สูบบุหรี่และอายุ ≥ 35 → CHC 3 (\u003c 15 มวน/วัน) หรือ 4 (≥ 15 มวน/วัน) · migraine with aura → CHC 4","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}}],"conditions":[{"id":"CARDIAC","label":"โรคหัวใจ","chapter":"4.1","always_consult":["CARDIO","OB"],"criteria":[{"id":"CARD-R01","level":"RED","label":"Eisenmenger syndrome","src":"p.25"},{"id":"CARD-R02","level":"RED","label":"Cyanotic congenital heart disease","src":"p.25"},{"id":"CARD-R03","level":"RED","label":"Pulmonary (arterial) hypertension","src":"p.25"},{"id":"CARD-R04","level":"RED","label":"Symptomatic valvular heart disease ที่ยังไม่ได้รับการแก้ไข","mec":["MEC-VHD-COMP"],"src":"p.25"},{"id":"CARD-R05","level":"RED","label":"mWHO class IV (เช่น NYHA III–IV หรือ LVEF \u003c 30%, prior PPCM with residual effect, severe aortic dilation, severe coarctation)","src":"p.24"},{"id":"CARD-Y01","level":"YELLOW","label":"Status post valve replacement","src":"p.25"},{"id":"CARD-Y02","level":"YELLOW","label":"On anticoagulation therapy เช่น warfarin","drug_link":"DRUG-WARFARIN","src":"p.25","decision":{"cd":"CD-01","choice":"A","date":"2026-09-22","evidence":[{"src":"ESC 2025 (EHJ Supplements)","text":"แนะนำให้มีแผน anticoagulation ก่อนหรือทันทีที่ทราบว่าตั้งครรภ์ในผู้มี mechanical valve (Class I, C)","url":"https://doi.org/10.1093/eurheartjsupp/suag017"},{"src":"ESC 2025 — Ten Commandments","text":"ไม่มีสูตร anticoagulation ใดปลอดภัยจริงในครรภ์ ต้องตัดสินรายบุคคล; PHT ดูแล mWHO 2.0 ≥ II–III","url":"https://academic.oup.com/eurheartj/article/47/5/543/8383799"},{"src":"ESC 2018 mWHO table (PMC7035233)","text":"mechanical valve อยู่ใน mWHO class III ไม่ใช่ IV","url":"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7035233/"}]}},{"id":"CARD-Y03","level":"YELLOW","label":"Asymptomatic valvular heart disease","mec":["MEC-VHD-UNCOMP"],"src":"p.25"},{"id":"CARD-Y04","level":"YELLOW","label":"Acyanotic congenital heart disease เช่น ASD, VSD, PDA","src":"p.25"},{"id":"CARD-Y05","level":"YELLOW","label":"Cardiomyopathy เช่น DCM, peripartum cardiomyopathy","src":"p.25"},{"id":"CARD-Y06","level":"YELLOW","label":"mWHO class III (ต้องดูแลที่ tertiary care, พบ cardiology ทุก 1–2 เดือนเมื่อตั้งครรภ์)","src":"p.24"},{"id":"CARD-I01","level":"INFO","label":"Complicated VHD (pulmonary HT, AF, เคยเป็น SBE)","mec":["MEC-VHD-COMP"],"src":"p.16"},{"id":"CARD-I02","level":"INFO","label":"Peripartum cardiomyopathy — NYHA I–II, \u003c 6 เดือน","mec":["MEC-PPCM-MILD-LT6"],"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"PPCM","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"Peripartum cardiomyopathy แยกตาม NYHA และระยะเวลา","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"CARD-I03","level":"INFO","label":"Peripartum cardiomyopathy — NYHA I–II, ≥ 6 เดือน","mec":["MEC-PPCM-MILD-GE6"],"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"PPCM","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"Peripartum cardiomyopathy แยกตาม NYHA และระยะเวลา","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"CARD-I04","level":"INFO","label":"Peripartum cardiomyopathy — NYHA III–IV","mec":["MEC-PPCM-SEVERE"],"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"PPCM","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"Peripartum cardiomyopathy แยกตาม NYHA และระยะเวลา","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}}],"workup":["EKG","Chest X-ray","Echocardiography","ประเมิน NYHA functional class","จัด mWHO risk class"],"counseling":["ความเสี่ยงสัมพันธ์กับ functional class และอาจแย่ลงช่วงท้ายของการตั้งครรภ์","โรคหัวใจบางชนิดผ่าตัดแก้ไขได้ — คุมกำเนิดและรักษาให้ดีขึ้นก่อนจึงตั้งครรภ์","Mechanical valve + warfarin: ความพิการแต่กำเนิดและเสี่ยงตกเลือดหลังคลอด ต้องปรับยาอย่างใกล้ชิด"],"src":"p.21-25"},{"id":"CVD","label":"โรคหลอดเลือดหัวใจ/สมอง และปัจจัยเสี่ยง","chapter":"3, 4.6","always_consult":["MED"],"criteria":[{"id":"CVD-Y01","level":"YELLOW","label":"Ischemic heart disease (past or current)","mec":["MEC-IHD"],"src":"p.15, p.62"},{"id":"CVD-Y02","level":"YELLOW","label":"ประวัติ stroke","mec":["MEC-STROKE"],"src":"p.16, p.62"},{"id":"CVD-I01","level":"INFO","label":"มีปัจจัยเสี่ยงหลายข้อ (smoking, DM, HT, hyperlipidemia, older age)","mec":["MEC-CV-RISK"],"src":"p.15"}],"src":"p.15-16, p.62"},{"id":"VTE","label":"ลิ่มเลือดอุดตันในหลอดเลือดดำ (VTE) / หลอดเลือดดำ","chapter":"3","consult_suggest":["MED"],"criteria":[{"id":"VTE-I01","level":"INFO","label":"Family history VTE ใน first-degree relative","mec":["MEC-VTE-FH"],"src":"p.16"},{"id":"VTE-I02","level":"INFO","label":"Superficial thrombophlebitis","mec":["MEC-VTE-SVT"],"src":"p.16"},{"id":"VTE-I03","level":"INFO","label":"มีความเสี่ยง DVT สูง หรือ known thrombophilia (ยังไม่เคยเป็น DVT/PE)","mec":["MEC-VTE-PAST"],"src":"p.16","note":"แยกกรณีเคยเป็น DVT/PE ไปไว้ที่ VTE-I06 ตาม CD-07 เพื่อไม่ให้ซ้ำ"},{"id":"VTE-I04","level":"INFO","label":"DVT/PE ปัจจุบันหรือเคยเป็น — กำลังได้ anticoagulant ขนาดรักษา (รวม acute)","mec":["MEC-VTE-ANTICOAG"],"src":"p.16","decision":{"cd":"CD-07","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"กำลังได้ anticoagulant ขนาดรักษา (รวม acute DVT/PE) → CHC 3, POP 2, DMPA 2, Implant 2, LNG-IUD 2, Cu-IUD 2","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"เคยเป็นและไม่ได้ anticoagulant แต่เสี่ยงกลับเป็นซ้ำสูง → CHC 4, POP 2, DMPA 3, Implant 2, LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"VTE-I05","level":"INFO","label":"Varicose vein","mec":["MEC-VARICOSE"],"src":"p.16"},{"id":"VTE-I06","level":"INFO","label":"เคยเป็น DVT/PE ไม่ได้ anticoagulant และเสี่ยงกลับเป็นซ้ำสูง (DVT จาก estrogen หรือการตั้งครรภ์, idiopathic, thrombophilia, active cancer, เป็นซ้ำ)","mec":["MEC-VTE-HX-NOAC-HIGH"],"src":"p.16; ext:U.S. MEC 2024","decision":{"cd":"CD-07","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"กำลังได้ anticoagulant ขนาดรักษา (รวม acute DVT/PE) → CHC 3, POP 2, DMPA 2, Implant 2, LNG-IUD 2, Cu-IUD 2","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"เคยเป็นและไม่ได้ anticoagulant แต่เสี่ยงกลับเป็นซ้ำสูง → CHC 4, POP 2, DMPA 3, Implant 2, LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}}],"src":"p.16"},{"id":"THY_HYPER","label":"ไทรอยด์เป็นพิษ (Hyperthyroidism)","chapter":"4.3","always_consult":["MED"],"mec_default":["MEC-THYROID"],"criteria":[{"id":"THY-R01","level":"RED","label":"ได้รับการรักษาด้วยการกลืนแร่ไอโอดีน (RAI) มายังไม่ถึง 6 เดือน","action":"ห้ามตั้งครรภ์อย่างน้อย 6 เดือนหลัง RAI — คุมกำเนิดจนครบ","src":"p.44, p.71"},{"id":"THY-Y01","level":"YELLOW","label":"ยังไม่ euthyroid — TFT ปกติยังไม่ครบ 2 ครั้งที่ห่างกัน ≥ 1 เดือน","action":"คุมกำเนิดและรอให้โรคสงบก่อน","src":"p.44"},{"id":"THY-Y02","level":"YELLOW","label":"กำลังใช้ยา Methimazole (MMI)","drug_link":"DRUG-MMI","src":"p.44-45"},{"id":"THY-Y03","level":"YELLOW","label":"หลังผ่าตัด/กลืนแร่แล้วเกิด hypothyroidism และ TSH ยังไม่ \u003c 2.5 mIU/L","action":"ปรับ LT4 ให้ TSH \u003c 2.5 mIU/L ก่อนตั้งครรภ์","src":"p.44"}],"workup":["TSH","Free T4","Free T3","TSH receptor Ab (TRAb) กรณีอาการไม่ชัดหรือประเมิน fetal thyrotoxicosis"],"counseling":["พิจารณาทางเลือก ATD / RAI / ผ่าตัด ร่วมกับผู้ป่วยตามข้อดีข้อเสีย","ใช้ยาต้านไทรอยด์: ตรวจการตั้งครรภ์ทันทีเมื่อขาดประจำเดือน ถ้าตั้งครรภ์ให้มาพบแพทย์ทันทีเพื่อเปลี่ยน MMI → PTU","Agranulocytosis: ถ้าไข้สูง เจ็บคอ ให้หยุดยาและตรวจ CBC","เลี่ยง atenolol (FGR) — ใช้ propranolol หรือ metoprolol แทนเมื่อจำเป็น"],"contraception_note":"ไม่มีข้อจำกัดในการเลือกวิธีคุมกำเนิด","src":"p.39-45"},{"id":"THY_HYPO","label":"ไทรอยด์ทำงานต่ำ (Hypothyroidism)","chapter":"4.3","mec_default":["MEC-THYROID"],"criteria":[{"id":"THY-Y04","level":"YELLOW","label":"TSH ยังไม่อยู่ในช่วงเป้าหมาย (ขอบล่างของค่าอ้างอิง ถึง 2.5 mIU/L)","action":"ปรับ levothyroxine (LT4) ให้ถึงเป้าก่อนตั้งครรภ์","src":"p.46"},{"id":"THY-I01","level":"INFO","label":"Subclinical hypothyroidism (TSH สูง, FT4 ปกติ)","tool_link":"TOOL-SUBCLIN-HYPO","src":"p.46-47"}],"workup":["TSH","Free T4","TPO Ab (กรณี subclinical และ TSH \u003c 10)"],"plan":["ใช้ levothyroxine (LT4) เท่านั้น","เมื่อทราบว่าตั้งครรภ์ เพิ่มขนาด LT4 ประมาณ 25–30% ทันที","ตรวจ TSH ทุก 4 สัปดาห์จนถึงกลางการตั้งครรภ์ และอีกครั้งที่ GA 33 สัปดาห์","หลังคลอดลดขนาดยาเท่าก่อนตั้งครรภ์ ตรวจ TSH ที่ 6 สัปดาห์"],"contraception_note":"ใช้ยาคุมหรือฮอร์โมนคุมกำเนิดวิธีอื่นได้ตามต้องการ","src":"p.45-47"},{"id":"SLE","label":"SLE / Antiphospholipid syndrome","chapter":"4.4","always_consult":["RHEUM","OB"],"mec_default":["MEC-SLE-NONE"],"criteria":[{"id":"SLE-R01","level":"RED","label":"Severe pulmonary hypertension (systolic PAP > 50 mmHg)","src":"p.52"},{"id":"SLE-R02","level":"RED","label":"Severe restrictive lung disease (FVC \u003c 1 L)","src":"p.52"},{"id":"SLE-R03","level":"RED","label":"Advanced renal insufficiency (creatinine > 2.8 mg/dL)","src":"p.52"},{"id":"SLE-R04","level":"RED","label":"Advanced heart failure","src":"p.52"},{"id":"SLE-R05","level":"RED","label":"เคยเป็น severe preeclampsia หรือ HELLP ทั้งที่ได้รับการรักษาแล้ว","src":"p.52"},{"id":"SLE-Y01","level":"YELLOW","label":"Severe disease flare ภายใน 6 เดือน","src":"p.52"},{"id":"SLE-Y02","level":"YELLOW","label":"Active lupus nephritis","src":"p.52"},{"id":"SLE-Y03","level":"YELLOW","label":"Stroke ภายใน 6 เดือน","src":"p.52"},{"id":"SLE-I01","level":"INFO","type":"tri","unknown_as":true,"label":"Antiphospholipid antibody (aPL) positive หรือยังไม่ทราบผล","mec":["MEC-SLE-APL"],"src":"p.53","decision":{"cd":"CD-12","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"ใช้ชื่อแถวว่า positive (or unknown) antiphospholipid antibodies","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"SLE-I02","level":"INFO","label":"Severe thrombocytopenia","mec":["MEC-SLE-THROMBO"],"src":"p.17"},{"id":"SLE-I03","level":"INFO","label":"ได้รับยากดภูมิคุ้มกัน (immunosuppressive treatment)","mec":["MEC-SLE-IMMUNO"],"src":"p.17"},{"id":"SLE-I04","level":"INFO","label":"Anti-Ro/SSA และ/หรือ anti-La/SSB positive","counsel":"เสี่ยง neonatal lupus / congenital heart block","src":"p.51"}],"workup":["Lupus anticoagulant","Anticardiolipin","Anti-β2-glycoprotein I","Anti-Ro/SSA","Anti-La/SSB","Anti-dsDNA","CH50, C3, C4","Spot UPCR","LFT","Uric acid"],"counseling":["ประเมิน major organ function — ไม่แนะนำตั้งครรภ์ถ้ามี organ dysfunction รุนแรง","ประเมิน disease activity: stable → ดำเนินการต่อ, active → เลื่อนการตั้งครรภ์","ทบทวนยาและปรับเป็นยาที่ปลอดภัยให้คุมโรคได้ก่อนตั้งครรภ์","Hydralazine และ methyldopa อาจทำให้เกิด drug-induced lupus","Cyclophosphamide กระทบภาวะเจริญพันธุ์ — พิจารณา GnRH analogue เพื่อ fertility preservation ก่อนให้ยา"],"contraception_note":"aPL negative: IUD, OCP, POP, DMPA, Implant / aPL positive หรือไม่ทราบ: Cu-IUD, LNG-IUS, Implant, POP — ห้าม CHC และไม่ควรใช้ DMPA","src":"p.49-53","contraception_decision":{"cd":"CD-21","choice":"B","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"positive (or unknown) aPL → CHC 4, DMPA 3, POP 2, Implant 2, LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"ACR 2020 press release","text":"ไม่แนะนำ CHC อย่างยิ่งในผู้มี aPL หรือ APS","url":"https://rheumatology.org/press-releases/american-college-of-rheumatology-releases-first-guideline-to-address-reproductive-health-for-patients-with-rheumatic-diseases"}],"note":"คู่มือเดิม (p.53) แนะนำเฉพาะ IUD ใน aPL positive"}},{"id":"DM","label":"เบาหวาน (Pregestational DM)","chapter":"4.5","always_consult":["ENDO"],"mec_default":["MEC-DM-NOVASC"],"criteria":[{"id":"DM-R01","level":"RED","label":"HbA1c > 10% — ไม่แนะนำให้ตั้งครรภ์ขณะนี้","src":"p.58, p.71","action":"คุมกำเนิด (พิจารณา LARC) จนกว่า HbA1c จะลดลง","decision":{"cd":"CD-02","choice":"A","date":"2026-09-22","evidence":[{"src":"NICE NG3 — Diabetes in pregnancy","text":"แนะนำอย่างหนักแน่นว่าไม่ควรตั้งครรภ์จนกว่า HbA1c จะลดลงต่ำกว่า 10%","url":"https://www.nice.org.uk/guidance/ng3/chapter/Recommendations"},{"src":"ADA Standards of Care 2024 §15","text":"คุมกำเนิดที่มีประสิทธิภาพจนกว่าแผนการรักษาและ A1C จะเหมาะสม","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC10725801/"}],"note":"คู่มือ p.58/71 = contraindication, p.59 = ข้อควรเลื่อน → ใช้ RED ในความหมาย 'ขณะนี้'"}},{"id":"DM-R02","level":"RED","label":"Creatinine > 2.3 mg/dL (0.2 mmol/L)","src":"p.58, p.71","decision":{"cd":"CD-03","choice":"A","date":"2026-09-22","evidence":[{"src":"ตรวจสอบเชิงตัวเลข","text":"0.2 mmol/L = 200 µmol/L ≈ 2.26 mg/dL ไม่เท่ากับ 3.6 mg/dL ที่คู่มือเขียน"}]}},{"id":"DM-Y01","level":"YELLOW","label":"HbA1c ≥ 6.5% (ยังไม่ถึงเป้า \u003c 6.5%)","action":"ควบคุมน้ำตาลให้ใกล้ปกติที่สุดโดยไม่เกิด hypoglycemia — HbA1c > 8.5% ความพิการทารกเพิ่มเป็น 22.4% เทียบ 3.4%","src":"p.57-58","decision":{"cd":"CD-19","choice":"A","date":"2026-09-22","evidence":[{"src":"ADA Standards of Care 2026 §15","text":"ADA 2026 ข้อ 15.3: ideally A1C \u003c 6.5% ถ้าไม่เกิด hypoglycemia มาก","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC12690181"},{"src":"NICE NG3 — Diabetes in pregnancy","text":"เป้า \u003c 6.5% (48 mmol/mol) ถ้าไม่เกิด hypoglycemia ที่เป็นปัญหา","url":"https://www.nice.org.uk/guidance/ng3/chapter/Recommendations"}]}},{"id":"DM-Y02","level":"YELLOW","label":"Proliferative retinopathy ที่ยังไม่ได้รักษา","consult":"EYE","action":"ตรวจและรักษาโดยจักษุแพทย์ก่อนตั้งครรภ์","src":"p.57-58"},{"id":"DM-Y03","level":"YELLOW","label":"Creatinine ≥ 1.36 mg/dL (120 µmol/L) หรือ urine ACR > 30 mg/mmol หรือ eGFR \u003c 45","consult":"NEPHRO","action":"ส่ง nephrologist ก่อนหยุดคุมกำเนิด","src":"ext:NICE NG3","decision":{"cd":"CD-03","choice":"A","date":"2026-09-22","evidence":[{"src":"NICE NG3 — Diabetes in pregnancy","text":"พิจารณาส่ง nephrologist ก่อนหยุดคุมกำเนิด ถ้า Cr ≥ 120 µmol/L, ACR > 30 mg/mmol หรือ eGFR \u003c 45","url":"https://www.nice.org.uk/guidance/ng3/chapter/Recommendations"}]}},{"id":"DM-I01","level":"INFO","label":"มี nephropathy / retinopathy / neuropathy หรือเป็นเบาหวาน > 20 ปี หรือมีโรคหัวใจและหลอดเลือด","mec":["MEC-DM-COMP"],"src":"p.17, p.59"},{"id":"DM-I02","level":"INFO","label":"Type 1 DM","labs":["TSH"],"src":"p.58"}],"workup":["HbA1c","ความดันโลหิต","24-hr urine protein, Cr, CrCl","UA, urine culture","EKG","ตรวจจอประสาทตา","ประเมินโรคหัวใจ (exercise tolerance, CAD) ในรายที่สงสัย"],"targets":["HbA1c \u003c 6.5% ถ้าทำได้โดยไม่เกิด hypoglycemia","น้ำตาลก่อนอาหารและก่อนนอน 60–99 mg/dL","น้ำตาลหลังอาหาร 1–2 ชม. 100–129 mg/dL","BMI \u003c 27 kg/m²","Folic acid 5 mg/วัน ตั้งแต่ก่อนตั้งครรภ์ถึง GA 12 สัปดาห์"],"contraception_note":"คุมน้ำตาลได้ดีไม่มีภาวะแทรกซ้อน ใช้ฮอร์โมนรวมได้ ถ้ามีโรคหลอดเลือดเลี่ยงเอสโตรเจนสูง เลือก POP หรือ implant","src":"p.55-59","plan":["ใช้ Folic acid 5 mg/วัน แทนขนาดปกติใน base_plan"],"targets_decisions":[{"cd":"CD-19","choice":"A","date":"2026-09-22","evidence":[{"src":"ADA Standards of Care 2026 §15","text":"ideally A1C \u003c 6.5%","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC12690181"},{"src":"NICE NG3 — Diabetes in pregnancy","text":"เป้า \u003c 6.5%","url":"https://www.nice.org.uk/guidance/ng3/chapter/Recommendations"}]},{"cd":"CD-20","choice":"A","date":"2026-09-22","evidence":[{"src":"NICE NG3 — Diabetes in pregnancy","text":"Folic acid 5 mg/วัน ตั้งแต่ก่อนตั้งครรภ์ถึง GA 12 สัปดาห์ในผู้ป่วยเบาหวาน","url":"https://www.nice.org.uk/guidance/ng3/chapter/Recommendations"}],"note":"คู่มือ p.58 เดิม 400 mcg/วัน"}]},{"id":"HT","label":"ความดันโลหิตสูงเรื้อรัง (Chronic HT)","chapter":"4.6","consult_suggest":["MED"],"mec_default":["MEC-HT-CTRL"],"criteria":[{"id":"HT-Y01","level":"YELLOW","label":"ควบคุมความดันไม่ได้ (DBP ≥ 110 mmHg)","consult":"MED","src":"p.62, p.71"},{"id":"HT-Y02","level":"YELLOW","label":"ใช้ยาลดความดันหลายชนิด","consult":"MED","src":"p.62, p.71"},{"id":"HT-Y03","level":"YELLOW","label":"Creatinine > 2 mg/dL","consult":"MED","src":"p.62, p.71"},{"id":"HT-Y04","level":"YELLOW","label":"เคยเป็น stroke, coronary artery disease หรือ heart failure","consult":"MED","mec":["MEC-HT-SEVERE"],"src":"p.62-63, p.71"},{"id":"HT-I01","level":"INFO","label":"เป็นความดันสูงมานานกว่า 5 ปี","labs":["ประเมินการทำงานของไต","ประเมินหลอดเลือดและหัวใจ"],"src":"p.62"},{"id":"HT-I02","level":"INFO","label":"BP ≥ 160/100 mmHg หรือมี vascular disease","mec":["MEC-HT-SEVERE"],"src":"p.16, p.63"},{"id":"HT-I03","level":"INFO","label":"ความดันสูงเฉพาะช่วงตั้งครรภ์ครั้งก่อน ปัจจุบันหายแล้ว","mec":["MEC-HT-PRIOR-PREG"],"src":"p.16"}],"counseling":["หลีกเลี่ยง ACE inhibitors, ARBs, thiazide และ thiazide-like diuretics — เปลี่ยนเป็นยากลุ่มอื่นก่อนตั้งครรภ์","ควบคุมน้ำหนัก อาหาร และออกกำลังกาย ให้คุมความดันได้ดีก่อนตั้งครรภ์","ความเสี่ยงระหว่างตั้งครรภ์: preeclampsia, AKI, stroke, heart failure, FGR, preterm, stillbirth"],"contraception_note":"DMPA ไม่เพิ่มความดันอย่างมีนัยสำคัญ ถ้ามีภาวะแทรกซ้อนระหว่างใช้วิธีใดให้เปลี่ยนเป็น Cu-IUD · CHC = category 3 แต่อาจทดลองได้ในหญิงสุขภาพดีอายุ ≤ 35 ปี คุมความดันดี ไม่สูบบุหรี่ ไม่มี end-organ damage และไม่รับหรือทน POP ไม่ได้ — วัดความดันซ้ำใน 2–4 สัปดาห์","src":"p.61-63","contraception_decision":{"cd":"CD-09","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"adequately controlled hypertension → CHC 3, DMPA 2, วิธีอื่น 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"ACOG PB 206 (สรุปใน PMC8528006)","text":"หญิงสุขภาพดีอายุ ≤ 35 ปีที่คุมความดันดีและไม่รับหรือทน POP ไม่ได้ อาจทดลอง CHC ได้ และวัดความดันซ้ำใน 2–4 สัปดาห์","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC8528006"}]}},{"id":"THAL","label":"โรคธาลัสซีเมีย (NTDT / TDT — ไม่รวมพาหะ)","chapter":"4.7","always_consult":["HEMATO","OB"],"criteria":[{"id":"THAL-Y01","level":"YELLOW","label":"Iron overload with end-organ damage","src":"p.68"},{"id":"THAL-Y02","level":"YELLOW","label":"Cirrhosis และ/หรือ cholelithiasis","src":"p.68"},{"id":"THAL-Y03","level":"YELLOW","label":"Active VTE","src":"p.68"},{"id":"THAL-I01","level":"INFO","label":"Transfusion-dependent (TDT)","action":"ก่อนตั้งครรภ์ควรมี Hb ≈ 10 g/dL จากการให้เลือดสม่ำเสมอ และประเมินการทำงานของหัวใจ","src":"p.67"}],"workup":["ตรวจคู่สมรส (Hb typing / mutation) เพื่อประเมินความเสี่ยงบุตรเป็นธาลัสซีเมียชนิดรุนแรง","Screening end-organ damage จาก iron overload: cardiac, DM, TFT, PTH","Immunization: HBV, Hib, conjugated meningococcal vaccine","Surveillance cirrhosis และ cholelithiasis","Antibiotic prophylaxis","Bone density scan","Vitamin supplement","Alloimmunization"],"counseling":["คู่เสี่ยง: ทางเลือก prenatal diagnosis — CVS, amniocentesis, cordocentesis","ความเสี่ยงมารดา: ซีดรุนแรงขึ้น หัวใจล้มเหลว GDM ติดเชื้อ แท้ง preterm ความดันสูง ผ่าตัดคลอด ตกเลือดหลังคลอด","ความเสี่ยงทารก: FGR, LBW, perinatal death, preterm","Desferrioxamine ใช้ได้เฉพาะไตรมาส 2–3 (RCOG) — ยาขับเหล็กชนิดอื่นพิจารณาคุมกำเนิดระหว่างรักษาอย่างน้อย 3 เดือน"],"contraception_note":"ใช้ได้ทุกวิธี (Cu-IUD = category 2) ยกเว้นมีโรคแทรกซ้อน เช่น นิ่วในถุงน้ำดี หรือลิ่มเลือดอุดตันหลังตัดม้าม","src":"p.65-68","mec_default":["MEC-THAL"]},{"id":"LIVER","label":"โรคตับ","chapter":"3","consult_suggest":["MED"],"criteria":[{"id":"LIV-I01","level":"INFO","label":"Viral hepatitis — carrier","mec":["MEC-LIV-CARRIER"],"src":"p.18"},{"id":"LIV-I02","level":"INFO","label":"Viral hepatitis — active","mec":["MEC-LIV-ACTIVE"],"src":"p.18"},{"id":"LIV-I03","level":"INFO","label":"Cirrhosis — mild","mec":["MEC-LIV-CIRR-MILD"],"src":"p.18"},{"id":"LIV-I04","level":"INFO","label":"Cirrhosis — severe","mec":["MEC-LIV-CIRR-SEVERE"],"src":"p.18"},{"id":"LIV-I05","level":"INFO","label":"Focal nodular hyperplasia","mec":["MEC-LIV-FNH"],"src":"p.18"},{"id":"LIV-I06","level":"INFO","label":"Hepatocellular adenoma","mec":["MEC-LIV-HCA"],"src":"p.18"},{"id":"LIV-I07","level":"INFO","label":"Malignant liver tumor","mec":["MEC-LIV-MALIG"],"src":"p.18"}],"src":"p.18"},{"id":"EPILEPSY","label":"โรคลมชัก","chapter":"3","consult_suggest":["MED"],"mec_default":["MEC-SEIZURE"],"criteria":[],"note":"ยากันชักที่มีปฏิกิริยากับฮอร์โมนคุมกำเนิดให้เลือกในขั้นตอน 'ยาที่ใช้อยู่'","src":"p.18-19"},{"id":"RA","label":"โรครูมาตอยด์","chapter":"3","consult_suggest":["RHEUM"],"mec_default":["MEC-RA-OFF"],"criteria":[{"id":"RA-I01","level":"INFO","label":"ได้รับยากดภูมิคุ้มกัน (immunosuppressive therapy)","mec":["MEC-RA-ON"],"src":"p.17"}],"src":"p.17"}],"mec":{"methods":[{"id":"CHC","label":"Combined hormonal contraception (COC, vaginal ring, patch)","tier":3},{"id":"POP","label":"Progestin-only pill","tier":3},{"id":"DMPA","label":"DMPA (ยาฉีดคุมกำเนิด)","tier":2},{"id":"IMPLANT","label":"ยาฝังคุมกำเนิด (LNG / ENG implant)","tier":1},{"id":"LNG_IUS","label":"ห่วงคุมกำเนิดชนิดมีฮอร์โมน (LNG-IUS)","tier":1},{"id":"CU_IUD","label":"ห่วงอนามัยทองแดง (Cu-IUD)","tier":1}],"permanent_option":"ทำหมัน (คุมกำเนิดถาวร) — อยู่ใน flowchart p.53, p.59, p.68, p.72 ไม่มีค่า MEC","categories":{"1":"ใช้ได้โดยไม่มีข้อห้าม","2":"ใช้ได้ ประโยชน์มากกว่าความเสี่ยง ควรเฝ้าระวังติดตาม","3":"ไม่ควรใช้ ความเสี่ยงมากกว่าประโยชน์ เว้นแต่ไม่มีวิธีอื่นที่เหมาะกว่า","4":"ห้ามใช้"},"combine_rule":"แต่ละวิธีใช้ category สูงสุดจากทุก row ที่ถูกเลือก; ไม่มี row = 1","rows":[{"id":"MEC-IHD","label":"Ischemic heart disease — past or current","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.15"},{"id":"MEC-CV-RISK","label":"Multiple CV risk factors","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.15","decision":{"cd":"CD-08","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"multiple risk factors → CHC 3/4, POP 2, DMPA 3, Implant 2, LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}],"note":"คู่มือเดิม LNG-IUS = 1"}},{"id":"MEC-VHD-UNCOMP","label":"Valvular heart disease — uncomplicated","cat":{"CHC":2,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.16"},{"id":"MEC-VHD-COMP","label":"Valvular heart disease — complicated","cat":{"CHC":4,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.16"},{"id":"MEC-PPCM-MILD-LT6","label":"Peripartum cardiomyopathy — NYHA I–II, \u003c 6 เดือน","cat":{"CHC":4,"POP":1,"DMPA":2,"IMPLANT":1,"LNG_IUS":2,"CU_IUD":2},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"PPCM","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"แถวที่คู่มือไม่มี เพิ่มตาม U.S. MEC 2024","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-PPCM-MILD-GE6","label":"Peripartum cardiomyopathy — NYHA I–II, ≥ 6 เดือน","cat":{"CHC":3,"POP":1,"DMPA":2,"IMPLANT":1,"LNG_IUS":2,"CU_IUD":2},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"PPCM","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"แถวที่คู่มือไม่มี เพิ่มตาม U.S. MEC 2024","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-PPCM-SEVERE","label":"Peripartum cardiomyopathy — NYHA III–IV","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":2},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"PPCM","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"แถวที่คู่มือไม่มี เพิ่มตาม U.S. MEC 2024","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-STROKE","label":"Stroke — past or current","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.16, p.63"},{"id":"MEC-VTE-FH","label":"VTE family history (1st-degree)","cat":{"CHC":2,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.16"},{"id":"MEC-VTE-SVT","label":"Superficial thrombophlebitis","cat":{"CHC":3,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.16"},{"id":"MEC-VTE-PAST","label":"High risk of DVT / known thrombophilia (ยังไม่เคยเป็น DVT/PE)","cat":{"CHC":4,"POP":2,"DMPA":2,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.16","review":{"flag":"PENDING","note":"U.S. MEC 2024 ให้ thrombophilia DMPA = 3 (คู่มือ 2) — ทบทวนพร้อมการอัปเดต WHO MEC 6th (CD-00)"}},{"id":"MEC-VTE-ANTICOAG","label":"DVT/PE ปัจจุบันหรือเคยเป็น — กำลังได้ anticoagulant ขนาดรักษา (รวม acute)","cat":{"CHC":3,"POP":2,"DMPA":2,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":2},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-07","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"กำลังได้ anticoagulant ขนาดรักษา (รวม acute DVT/PE) → CHC 3, POP 2, DMPA 2, Implant 2, LNG-IUD 2, Cu-IUD 2","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"เคยเป็นและไม่ได้ anticoagulant แต่เสี่ยงกลับเป็นซ้ำสูง → CHC 4, POP 2, DMPA 3, Implant 2, LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-VTE-HX-NOAC-HIGH","label":"เคยเป็น DVT/PE ไม่ได้ anticoagulant และเสี่ยงกลับเป็นซ้ำสูง","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-07","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"กำลังได้ anticoagulant ขนาดรักษา (รวม acute DVT/PE) → CHC 3, POP 2, DMPA 2, Implant 2, LNG-IUD 2, Cu-IUD 2","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"เคยเป็นและไม่ได้ anticoagulant แต่เสี่ยงกลับเป็นซ้ำสูง → CHC 4, POP 2, DMPA 3, Implant 2, LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-VARICOSE","label":"Varicose vein","cat":{"CHC":1,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.16"},{"id":"MEC-HT-PRIOR-PREG","label":"HT during prior pregnancy only — now resolved","cat":{"CHC":2,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.16"},{"id":"MEC-HT-CTRL","label":"HT ควบคุมได้ / BP 140–159 / 90–99 mmHg","cat":{"CHC":3,"POP":1,"DMPA":2,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.16, p.63","note":"ข้อยกเว้น ACOG: อายุ ≤ 35 ปี คุมความดันดี ไม่สูบบุหรี่ ไม่มี end-organ damage และไม่รับหรือทน POP ไม่ได้ → อาจทดลอง CHC และวัดความดันซ้ำใน 2–4 สัปดาห์","decision":{"cd":"CD-09","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"adequately controlled hypertension → CHC 3, DMPA 2, วิธีอื่น 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"ACOG PB 206 (สรุปใน PMC8528006)","text":"หญิงสุขภาพดีอายุ ≤ 35 ปีที่คุมความดันดีและไม่รับหรือทน POP ไม่ได้ อาจทดลอง CHC ได้ และวัดความดันซ้ำใน 2–4 สัปดาห์","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC8528006"}]}},{"id":"MEC-HT-SEVERE","label":"BP ≥ 160/100 mmHg และ/หรือ vascular disease, stroke, CAD","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.16, p.63"},{"id":"MEC-BMI30","label":"BMI > 30 kg/m²","cat":{"CHC":2,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.63"},{"id":"MEC-SMOKE35-LT15","label":"สูบบุหรี่ \u003c 15 มวน/วัน และอายุ ≥ 35 ปี","cat":{"CHC":3,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"SMOKE35","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"แถวที่คู่มือไม่มี เพิ่มตาม U.S. MEC 2024","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-SMOKE35-GE15","label":"สูบบุหรี่ ≥ 15 มวน/วัน และอายุ ≥ 35 ปี","cat":{"CHC":4,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"SMOKE35","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"แถวที่คู่มือไม่มี เพิ่มตาม U.S. MEC 2024","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-MIGRAINE-AURA","label":"Migraine with aura","cat":{"CHC":4,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"MIGRAINE","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"แถวที่คู่มือไม่มี เพิ่มตาม U.S. MEC 2024","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-DM-GDM-HX","label":"Gestational DM in past","cat":{"CHC":1,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.17, p.59"},{"id":"MEC-DM-NOVASC","label":"DM without vascular disease / คุมได้ดีไม่มีภาวะแทรกซ้อน","cat":{"CHC":2,"POP":2,"DMPA":2,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.17, p.59"},{"id":"MEC-DM-COMP","label":"DM with end-organ damage / > 20 ปี / มีโรคหัวใจและหลอดเลือด","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.17, p.59","decision":{"cd":"CD-04","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"nephropathy/retinopathy/neuropathy และ vascular disease หรือเป็น > 20 ปี → CHC 3/4, DMPA 3, POP/Implant/LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}],"note":"คู่มือ p.17 = 3, p.59 = 4 → ใช้ 4"}},{"id":"MEC-THYROID","label":"Simple goiter / Hyperthyroidism / Hypothyroidism","cat":{"CHC":1,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.17"},{"id":"MEC-SLE-APL","label":"SLE — antiphospholipid Ab positive หรือไม่ทราบ","cat":{"CHC":4,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.17","decision":{"cd":"CD-21","choice":"B","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"positive (or unknown) aPL → CHC 4, DMPA 3, POP 2, Implant 2, LNG-IUD 2, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"},{"src":"ACR 2020 press release","text":"ไม่แนะนำ CHC อย่างยิ่งในผู้มี aPL หรือ APS","url":"https://rheumatology.org/press-releases/american-college-of-rheumatology-releases-first-guideline-to-address-reproductive-health-for-patients-with-rheumatic-diseases"}],"note":"คู่มือเดิม (p.53) แนะนำเฉพาะ IUD ใน aPL positive"}},{"id":"MEC-SLE-THROMBO","label":"SLE — severe thrombocytopenia","cat":{"CHC":2,"POP":2,"DMPA":3,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":3},"src":"p.17"},{"id":"MEC-SLE-IMMUNO","label":"SLE — immunosuppressive treatment","cat":{"CHC":2,"POP":2,"DMPA":2,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":2},"src":"p.17"},{"id":"MEC-SLE-NONE","label":"SLE — none of above","cat":{"CHC":2,"POP":2,"DMPA":2,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.17"},{"id":"MEC-THAL","label":"Thalassemia","cat":{"CHC":1,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":2},"src":"ext:U.S. MEC 2024","decision":{"cd":"CD-22","choice":"THAL","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"แถวที่คู่มือไม่มี เพิ่มตาม U.S. MEC 2024","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}]}},{"id":"MEC-RA-ON","label":"RA — on immunosuppressive therapy","cat":{"CHC":2,"POP":1,"DMPA":2,"IMPLANT":1,"LNG_IUS":2,"CU_IUD":2},"src":"p.17"},{"id":"MEC-RA-OFF","label":"RA — not on immunosuppressive therapy","cat":{"CHC":2,"POP":1,"DMPA":2,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.17","decision":{"cd":"CD-05","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"RA ที่ไม่ได้รับ immunosuppressive → CHC 2, POP 1, DMPA 2, Implant 1, LNG-IUD 1, Cu-IUD 1","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}],"note":"คู่มือเดิม 2/2/3/2/2/3 เหมือนแถว SLE severe thrombocytopenia — คัดลอกผิด"}},{"id":"MEC-LIV-CARRIER","label":"Viral hepatitis — carrier","cat":{"CHC":1,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.18"},{"id":"MEC-LIV-ACTIVE","label":"Viral hepatitis — active","cat":{"CHC":4,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.18"},{"id":"MEC-LIV-CIRR-MILD","label":"Cirrhosis — mild","cat":{"CHC":1,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.18"},{"id":"MEC-LIV-CIRR-SEVERE","label":"Cirrhosis — severe","cat":{"CHC":4,"POP":3,"DMPA":3,"IMPLANT":3,"LNG_IUS":3,"CU_IUD":1},"src":"p.18"},{"id":"MEC-LIV-FNH","label":"Focal nodular hyperplasia","cat":{"CHC":2,"POP":2,"DMPA":2,"IMPLANT":2,"LNG_IUS":2,"CU_IUD":1},"src":"p.18"},{"id":"MEC-LIV-HCA","label":"Hepatocellular adenoma","cat":{"CHC":4,"POP":3,"DMPA":3,"IMPLANT":3,"LNG_IUS":3,"CU_IUD":1},"src":"p.18"},{"id":"MEC-LIV-MALIG","label":"Liver tumor — malignant","cat":{"CHC":4,"POP":3,"DMPA":3,"IMPLANT":3,"LNG_IUS":3,"CU_IUD":1},"src":"p.18"},{"id":"MEC-SEIZURE","label":"Seizure disorder — without drug interactions","cat":{"CHC":1,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.18","decision":{"cd":"CD-06","choice":"A","date":"2026-09-22","evidence":[{"src":"CDC — U.S. MEC 2024 (Appendix A)","text":"epilepsy = 1 ทุกวิธี · ปฏิกิริยาระหว่างยาอยู่ในแถวยากันชัก","url":"https://www.cdc.gov/contraception/hcp/usspr/classifications-mec-contraception.html"}],"note":"คู่มือเดิม 2/1/2/1/2/2"}},{"id":"MEC-DRUG-ANTICONV","label":"Anticonvulsants (phenytoin, carbamazepine, barbiturates, primidone, topiramate, oxcarbazepine)","cat":{"CHC":3,"POP":3,"DMPA":1,"IMPLANT":2,"LNG_IUS":1,"CU_IUD":1},"note":"ถ้าจำเป็นต้องใช้ pill ให้เลือกชนิด estrogen ≥ 30 mcg","src":"p.18"},{"id":"MEC-DRUG-LAMO","label":"Lamotrigine alone (lamotrigine + valproate ไม่มีปฏิกิริยากับฮอร์โมน)","cat":{"CHC":3,"POP":1,"DMPA":1,"IMPLANT":1,"LNG_IUS":1,"CU_IUD":1},"src":"p.19"},{"id":"MEC-DRUG-RIF","label":"Rifampicin / rifabutin","cat":{"CHC":3,"POP":3,"DMPA":1,"IMPLANT":2,"LNG_IUS":1,"CU_IUD":1},"src":"p.19"}],"notes":[{"text":"Antiretrovirals: ทุกตัวเป็น category 1 หรือ 2 ทุกวิธี ยกเว้น fosamprenavir","src":"p.18"},{"text":"ยาปฏิชีวนะ ยาต้านเชื้อรา ยาฆ่าปรสิตอื่นทั้งหมด: category 1 ทุกวิธี","src":"p.19"}],"source_edition_note":"คู่มือดัดแปลงจาก WHO MEC 5th edition 2015 — ค่าไม่แยก initiation / continuation","tier_decision":{"cd":"CD-13","choice":"A","date":"2026-09-22","evidence":[{"src":"US HHS Office of Population Affairs","text":"typical use ปีแรก: implant 0.05%, LNG-IUD 0.2%, Cu-IUD 0.8%, ยาฉีด 6%, ยาเม็ด/แผ่นแปะ/วงแหวน 9% (ดัดแปลงจาก WHO FP Handbook)","url":"https://opa.hhs.gov/contraceptive-options-and-effectiveness-highlight1-text-only"}]}},"drug_alerts":[{"id":"DRUG-WARFARIN","name":"Warfarin","level":"YELLOW","alert":"ทำให้ทารกพิการแต่กำเนิดและเสี่ยงตกเลือดหลังคลอด","action":"ส่ง Pregnancy heart team วางแผนปรับยาก่อนตั้งครรภ์","consult":"CARDIO","src":"p.24-25"},{"id":"DRUG-MMI","name":"Methimazole (MMI)","level":"YELLOW","alert":"ใช้ช่วง GA 6–10 สัปดาห์ ความพิการแต่กำเนิดมากกว่า PTU 2 เท่า (aplasia cutis, esophageal atresia, abdominal wall defect, VSD)","action":"ตรวจการตั้งครรภ์ทันทีเมื่อขาดประจำเดือน ถ้าตั้งครรภ์เปลี่ยนเป็น PTU ในไตรมาสแรก","src":"p.44-45"},{"id":"DRUG-ACEI-ARB","name":"ACE inhibitors / ARBs","level":"YELLOW","alert":"ควรหลีกเลี่ยงในการตั้งครรภ์","action":"เปลี่ยนเป็นยาลดความดันกลุ่มอื่นก่อนตั้งครรภ์","src":"p.63"},{"id":"DRUG-THIAZIDE","name":"Thiazide / thiazide-like diuretics","level":"YELLOW","alert":"ควรหลีกเลี่ยงในการตั้งครรภ์","action":"เปลี่ยนเป็นยากลุ่มอื่นก่อนตั้งครรภ์","src":"p.63"},{"id":"DRUG-CHELATOR","name":"Deferasirox / Deferiprone","level":"YELLOW","alert":"Teratogenic","action":"หยุดยาก่อนตั้งครรภ์ (desferrioxamine ใช้ได้เฉพาะไตรมาส 2–3) และคุมกำเนิดระหว่างใช้ยาอย่างน้อย 3 เดือน","consult":"HEMATO","src":"p.67-68"},{"id":"DRUG-LITHIUM","name":"Lithium","level":"YELLOW","alert":"Teratogenic effect; เป็นข้อบ่งชี้ตรวจคัดกรอง TSH","action":"ทบทวนยาร่วมกับแพทย์ผู้สั่ง และตรวจ TSH","consult":"PSY","labs":["TSH"],"src":"p.45-46"},{"id":"DRUG-ATENOLOL","name":"Atenolol","level":"INFO","alert":"Category D — สัมพันธ์กับทารกโตช้าในครรภ์","action":"ถ้าต้องใช้ beta-blocker เลือก propranolol หรือ metoprolol","src":"p.45"},{"id":"DRUG-AMIODARONE","name":"Amiodarone","level":"INFO","alert":"เป็นข้อบ่งชี้ตรวจคัดกรอง TSH","labs":["TSH"],"src":"p.46"},{"id":"DRUG-CYCLOPHOSPHAMIDE","name":"Cyclophosphamide (alkylating agent)","level":"YELLOW","alert":"กระทบความสามารถในการมีบุตร และต้องหยุดก่อนพยายามตั้งครรภ์","action":"หยุดก่อนพยายามตั้งครรภ์ · พิจารณา GnRH analogue เพื่อ fertility preservation ก่อนให้ยา","src":"p.53","consult":"RHEUM","decision":{"cd":"CD-14","choice":"CYC","date":"2026-09-22","evidence":[{"src":"ACR 2020 Reproductive Health Guideline","text":"แนะนำอย่างหนักแน่นให้หยุด cyclophosphamide ก่อนพยายามตั้งครรภ์","url":"https://rheumnow.com/news/acr-2020-reproductive-guidelines-medication-use-pregnancy"}]}},{"id":"DRUG-HYDRALAZINE-METHYLDOPA","name":"Hydralazine / Methyldopa","level":"INFO","only_if_condition":"SLE","alert":"อาจทำให้เกิด drug-induced lupus และโรค SLE กำเริบ","src":"p.53"},{"id":"DRUG-ANTICONV-EI","name":"Phenytoin / Carbamazepine / Barbiturates / Primidone / Topiramate / Oxcarbazepine","level":"INFO","alert":"ลดประสิทธิภาพฮอร์โมนคุมกำเนิด","mec":["MEC-DRUG-ANTICONV"],"src":"p.18"},{"id":"DRUG-LAMOTRIGINE","name":"Lamotrigine (ใช้เดี่ยว)","level":"INFO","alert":"มีปฏิกิริยากับฮอร์โมนรวม","mec":["MEC-DRUG-LAMO"],"src":"p.19"},{"id":"DRUG-RIFAMPICIN","name":"Rifampicin / Rifabutin","level":"INFO","alert":"ลดประสิทธิภาพฮอร์โมนคุมกำเนิด","mec":["MEC-DRUG-RIF"],"src":"p.19"},{"id":"DRUG-ARV","name":"Antiretrovirals","level":"INFO","alert":"ทุกตัว MEC 1–2 ทุกวิธี ยกเว้น fosamprenavir","src":"p.18"},{"id":"DRUG-VALPROATE","name":"Valproate","level":"YELLOW","alert":"ความพิการแต่กำเนิดประมาณ 10% และความผิดปกติพัฒนาการ 30–40%","action":"ให้แพทย์ผู้สั่งยาพิจารณาเปลี่ยนยาก่อนตั้งครรภ์ และคุมกำเนิดระหว่างใช้ยา","consult":"MED","src":"ext:MHRA","decision":{"cd":"CD-14","choice":"VPA","date":"2026-09-22","evidence":[{"src":"MHRA — Valproate PPP","text":"ความพิการ ~10% และความผิดปกติพัฒนาการ 30–40%","url":"https://www.gov.uk/drug-safety-update/valproate-pregnancy-prevention-programme-temporary-advice-for-management-during-coronavirus-covid-19"}]}},{"id":"DRUG-METHOTREXATE","name":"Methotrexate","level":"YELLOW","alert":"Teratogenic","action":"หยุดก่อนพยายามตั้งครรภ์","consult":"RHEUM","src":"ext:ACR 2020","decision":{"cd":"CD-14","choice":"MTX","date":"2026-09-22","evidence":[{"src":"ACR 2020 Reproductive Health Guideline","text":"แนะนำอย่างหนักแน่นให้หยุด methotrexate ก่อนพยายามตั้งครรภ์","url":"https://rheumnow.com/news/acr-2020-reproductive-guidelines-medication-use-pregnancy"}]}},{"id":"DRUG-MYCOPHENOLATE","name":"Mycophenolate mofetil / mycophenolic acid","level":"YELLOW","alert":"Teratogenic","action":"หยุดอย่างน้อย 6 สัปดาห์ก่อนพยายามตั้งครรภ์","consult":"RHEUM","src":"ext:ACR 2020","decision":{"cd":"CD-14","choice":"MMF","date":"2026-09-22","evidence":[{"src":"ACR 2020 Reproductive Health Guideline","text":"หยุด mycophenolate อย่างน้อย 6 สัปดาห์ก่อนพยายามตั้งครรภ์","url":"https://rheumnow.com/news/acr-2020-reproductive-guidelines-medication-use-pregnancy"}]}},{"id":"DRUG-LEFLUNOMIDE","name":"Leflunomide","level":"YELLOW","alert":"Teratogenic และค้างในร่างกายนาน","action":"วางแผนหยุดยาและทำ cholestyramine washout ร่วมกับแพทย์ผู้สั่งยา · ถ้าตั้งครรภ์ระหว่างใช้ยาให้หยุดทันทีและ washout จนระดับยาตรวจไม่พบ","consult":"RHEUM","src":"ext:ACR 2020","decision":{"cd":"CD-14","choice":"LEF","date":"2026-09-22","evidence":[{"src":"ACR 2020 Reproductive Health Guideline","text":"ถ้าตั้งครรภ์ระหว่างใช้ leflunomide ให้หยุดยาและทำ cholestyramine washout จนระดับยาตรวจไม่พบ","url":"https://rheumnow.com/news/acr-2020-reproductive-guidelines-medication-use-pregnancy"}]}},{"id":"DRUG-THALIDOMIDE","name":"Thalidomide","level":"YELLOW","alert":"Teratogenic","action":"หยุดก่อนพยายามตั้งครรภ์","src":"ext:ACR 2020","decision":{"cd":"CD-14","choice":"THAL","date":"2026-09-22","evidence":[{"src":"ACR 2020 Reproductive Health Guideline","text":"แนะนำอย่างหนักแน่นให้หยุด thalidomide ก่อนพยายามตั้งครรภ์","url":"https://rheumnow.com/news/acr-2020-reproductive-guidelines-medication-use-pregnancy"}]}},{"id":"DRUG-ISOTRETINOIN","name":"Isotretinoin","level":"YELLOW","alert":"Teratogenic","action":"หยุดยาและคุมกำเนิด — ระยะหยุดยาก่อนตั้งครรภ์ให้เภสัชกรกำหนด","src":"ext:CD-14","review":{"flag":"PENDING","note":"รอเภสัชกรกำหนดระยะหยุดยา (PEND-05)"},"decision":{"cd":"CD-14","choice":"ISO","date":"2026-09-22","evidence":[],"note":"ผู้ตัดสินเลือกให้เพิ่ม โดยให้เภสัชกรกำหนดรายละเอียด"}},{"id":"DRUG-STATIN","name":"Statins","level":"INFO","alert":"FDA 2021 ถอดข้อห้ามใช้ในครรภ์ แต่ยังแนะนำให้หยุดเมื่อทราบว่าตั้งครรภ์ในผู้ป่วยส่วนใหญ่","action":"หยุดเมื่อทราบว่าตั้งครรภ์ ยกเว้นกลุ่มเสี่ยงสูงมากให้ปรึกษาอายุรแพทย์","src":"ext:FDA 2021","decision":{"cd":"CD-14","choice":"STATIN","date":"2026-09-22","evidence":[{"src":"FDA Drug Safety Communication 2021 (statins)","text":"ถอด contraindication แต่แนะนำให้หยุด statin เมื่อทราบว่าตั้งครรภ์ในผู้ป่วยส่วนใหญ่","url":"https://www.fda.gov/drugs/drug-safety-and-availability/fda-requests-removal-strongest-warning-against-using-cholesterol-lowering-statins-during-pregnancy"}]}}],"vaccines":{"dT":{"question":"ประวัติการได้รับวัคซีน dT / DTP","rules":[{"id":"DT-01","history":"ได้ DTP ครบ 5 เข็ม และ dT เมื่อ ป.6 นานกว่า 10 ปี","give":"dT 1 ครั้ง","then":"กระตุ้น 1 ครั้งทุก 10 ปี"},{"id":"DT-02","history":"เคยได้ครบ 3 ครั้ง — เข็มสุดท้ายเกิน 10 ปี","give":"dT 1 ครั้ง","then":"กระตุ้น 1 ครั้งทุก 10 ปี"},{"id":"DT-03","history":"เคยได้ครบ 3 ครั้ง — เข็มสุดท้าย \u003c 10 ปี","give":"ไม่ต้องให้วัคซีน","then":null},{"id":"DT-04","history":"อายุ 20 ปี ได้รับครบ 3 ครั้ง และได้เข็มสุดท้ายเมื่ออยู่ชั้น ป.6","give":"dT 1 ครั้ง","then":"กระตุ้น 1 ครั้งทุก 10 ปี","decision":{"cd":"CD-16","choice":"A","date":"2026-09-22","evidence":[{"src":"กรมควบคุมโรค — แนวทางวัคซีนผู้ใหญ่ ปี 2566","text":"เกณฑ์ข้อ 3.3: อายุ 20 ปีที่ได้ครบ 3 ครั้งและเข็มสุดท้ายเมื่อ ป.6 → dT 1 เข็ม","url":"https://ddc.moph.go.th/uploads/publish/1366120230209074448.pdf"}]}},{"id":"DT-05","history":"เคยได้ไม่ครบ 3 ครั้ง — ได้ 2 ครั้ง","give":"dT 1 ครั้ง ห่างจากเข็มสุดท้าย 6 เดือน","then":"กระตุ้น 1 ครั้งทุก 10 ปี"},{"id":"DT-06","history":"เคยได้ไม่ครบ 3 ครั้ง — ได้ 1 ครั้ง","give":"dT 2 ครั้ง: เข็มแรกห่างจากเข็มสุดท้าย 1 เดือน, เข็ม 2 ห่างจากเข็มแรก 6 เดือน","then":"กระตุ้น 1 ครั้งทุก 10 ปี"},{"id":"DT-07","history":"ไม่มีประวัติ / ไม่ทราบ / ไม่แน่ใจ","give":"dT 3 ครั้ง: เข็มแรกทันที, เข็ม 2 ห่างเข็มแรก 1 เดือน, เข็ม 3 ห่างเข็ม 2 6 เดือน","then":"กระตุ้น 1 ครั้งทุก 10 ปี"}],"note":"ถ้าหลังฉีด dT บวมแดงมากตั้งแต่หัวไหล่ถึงข้อศอก (Arthus reaction) ให้หยุดเข็มถัดไป แล้วนัดกระตุ้น 1 ครั้งทุก 10 ปี","src":"p.10; กรมควบคุมโรค 2566"},"influenza":{"text":"หญิงตั้งครรภ์ทุกคน 1 เข็ม เมื่อ GA ครบ 4 เดือน (ให้ได้ตั้งแต่ 14 สัปดาห์) ให้บริการได้ตลอดปี","src":"กรมควบคุมโรค 2566 (แทน p.11)","decision":{"cd":"CD-24","choice":"A","date":"2026-09-22","evidence":[{"src":"กรมควบคุมโรค — แนวทางวัคซีนผู้ใหญ่ ปี 2566","text":"GA ≥ 4 เดือน ให้ได้ตั้งแต่ 14 สัปดาห์ ตลอดปี","url":"https://ddc.moph.go.th/uploads/publish/1366120230209074448.pdf"}],"note":"คู่มือเดิม: ทุกไตรมาส ในทางปฏิบัติหลังไตรมาสแรก"}},"covid19":{"text":"ให้ตามคำแนะนำกระทรวงสาธารณสุขฉบับปัจจุบัน","src":"CD-15 (แทน p.11)","decision":{"cd":"CD-15","choice":"A","date":"2026-09-22","evidence":[{"src":"ACOG 2026–27 respiratory immunization","text":"ACOG (ก.ย. 2026) แนะนำอย่างหนักแน่นให้ฉีดวัคซีนโควิด-19 ไข้หวัดใหญ่ และ RSV ในหญิงตั้งครรภ์ หลังคลอด และผู้ที่วางแผนตั้งครรภ์","url":"https://www.acog.org/news/news-releases/2026/09/acog-releases-2026-27-respiratory-virus-season-immunization-recommendations"},{"src":"CDC — COVID-19 vaccination in pregnancy","text":"CDC 2025–26: ตัดสินใจรายบุคคล แต่การตั้งครรภ์เพิ่มความเสี่ยงป่วยรุนแรง","url":"https://www.cdc.gov/covid/vaccines/pregnant-or-breastfeeding.html"}],"note":"หลักฐานต่างประเทศแสดงเป็นข้อมูลอ้างอิง ข้อความหลักยึดกระทรวงสาธารณสุข"}},"aP":{"text":"aP 1 เข็มทุกการตั้งครรภ์ GA 20–32 สัปดาห์ (ให้ได้ตั้งแต่ 16 สัปดาห์ และควรฉีดอย่างน้อย 2 สัปดาห์ก่อนคลอด) · ใช้ Tdap/TdaP แทน dT + aP ได้ 1 เข็ม","src":"กรมควบคุมโรค ม.ค. 2567","decision":{"cd":"CD-23","choice":"A","date":"2026-09-22","evidence":[{"src":"กรมควบคุมโรค — แนวทางวัคซีน aP ในหญิงตั้งครรภ์ (ม.ค. 2567)","text":"aP 1 เข็มทุกการตั้งครรภ์ GA 20–32 สัปดาห์ · สปสช. สนับสนุนตั้งแต่ปี 2567","url":"https://www.ddc.moph.go.th/uploads/publish/1518520240108084839.pdf"}]}}},"tools":[{"id":"TOOL-NYHA","name":"NYHA functional classification","type":"table","src":"p.23","rows":[{"class":"I","desc":"ไม่มีอาการ ไม่จำกัดกิจกรรมปกติ"},{"class":"II","desc":"อาการเล็กน้อย จำกัดกิจกรรมปกติเล็กน้อย"},{"class":"III","desc":"จำกัดกิจกรรมมาก แม้กิจกรรมน้อยกว่าปกติ สบายเฉพาะตอนพัก"},{"class":"IV","desc":"จำกัดรุนแรง มีอาการแม้ขณะพัก"}]},{"id":"TOOL-MWHO","name":"WHO risk classification of CVD and pregnancy","type":"table","src":"p.24","rows":[{"class":"I","risk":"ความเสี่ยงไม่ต่างจากประชากรทั่วไป","examples":"Uncomplicated small/mild PS, PDA, MVP with trivial MR; repaired simple lesion (secundum ASD, VSD, PDA, TAPVD); isolated ectopic beats","care":"พบ cardiology 1–2 ครั้งระหว่างตั้งครรภ์ ดูแลที่ รพ.ในพื้นที่ได้"},{"class":"II","risk":"Mortality เพิ่มเล็กน้อย morbidity เพิ่มปานกลาง","examples":"Unoperated ASD/VSD, repaired tetralogy of Fallot, most arrhythmias, Turner syndrome without aortic dilation","care":"พบ cardiology 1–2 ครั้งระหว่างตั้งครรภ์ ดูแลที่ รพ.ในพื้นที่ได้"},{"class":"III","risk":"Mortality เพิ่มมาก morbidity รุนแรง","examples":"Mechanical valve, systemic RV, post-Fontan, unrepaired cyanotic heart disease, complex CHD, moderate LV impairment, prior PPCM without residual, aortic dilation 40–50 mm, VT","care":"พบ cardiology ทุก 1–2 เดือน ดูแลที่ tertiary care"},{"class":"IV","risk":"Mortality หรือ morbidity สูงมาก — ห้ามตั้งครรภ์ พิจารณายุติ","examples":"PAH, severe systemic ventricular dysfunction (NYHA III–IV หรือ LVEF \u003c 30%), prior PPCM with residual, severe aortic dilation, severe coarctation, Fontan with complications","care":"ถ้าตั้งครรภ์: พบ cardiology ทุกเดือน ดูแลที่ tertiary care"}],"review":{"flag":"PENDING","note":"ตัดสินให้อัปเดตเป็น mWHO 2.0 (ESC 2025) — รอถอดตาราง Table 6 จากฉบับเต็ม (PEND-02) ระหว่างนี้ใช้ตาราง 2018"},"decision":{"cd":"CD-25","choice":"A","date":"2026-09-22","evidence":[{"src":"ESC 2025 Guidelines — CVD and pregnancy","text":"mWHO 2.0 ขยายรวมโรคหัวใจอื่นและปรับด้วย CARPREG II; PHT บังคับสำหรับ class II–III ขึ้นไป","url":"https://academic.oup.com/eurheartj/article/46/43/4462/8234487"}]}},{"id":"TOOL-BWPS","name":"Burch-Wartofsky Point Scale (thyroid storm)","type":"score","src":"p.44","items":[{"param":"Temperature (°C)","options":[["\u003c 37.2",0],["37.2–37.7",5],["37.8–38.2",10],["38.3–38.8",15],["38.9–39.4",20],["39.5–39.9",25],["≥ 40",30]]},{"param":"CNS effect","options":[["Absent",0],["Mild: agitation",10],["Moderate: delirium, psychosis, extreme lethargy",20],["Severe: seizure, coma",30]]},{"param":"GI-hepatic dysfunction","options":[["Absent",0],["Moderate: diarrhea, nausea/vomiting, abdominal pain",10],["Severe: unexplained jaundice",20]]},{"param":"Heart rate (bpm)","options":[["\u003c 99",0],["99–109",5],["110–119",10],["120–129",15],["130–139",20],["≥ 140",25]]},{"param":"Congestive heart failure","options":[["Absent",0],["Mild: pedal edema",5],["Moderate: bibasilar rales",10],["Severe: pulmonary edema",15]]},{"param":"Atrial fibrillation","options":[["Absent",0],["Present",10]]},{"param":"Precipitant history","options":[["Negative",0],["Positive",10]]}],"interpret":[[45,"Thyroid storm"],[25,"Impending thyroid storm"],[0,"ไม่น่าใช่ thyroid storm"]],"decision":{"cd":"CD-18","choice":"BWPS","date":"2026-09-22","evidence":[{"src":"Thyroid storm in pregnancy review (PMC10792856)","text":"38.3–38.8 °C = 15 คะแนน","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC10792856"}],"note":"ยืนยันการแก้: คู่มือพิมพ์ 38.3–38.8 = 5 คะแนน (ต้นฉบับ BWPS = 15) และช่วง 38.9–39.4 / 39.4–39.9 ซ้อนกัน — KB ใช้ค่าตามต้นฉบับ; เกณฑ์คู่มือเขียน '> 45' ต้นฉบับ ≥ 45"}},{"id":"TOOL-SUBCLIN-HYPO","name":"Subclinical hypothyroidism — เกณฑ์เริ่ม LT4","type":"table","src":"p.47","rows":[{"tsh":"\u003c 10 mIU/L","action":"ตรวจ TPO Ab — ผลบวก: ให้ LT4 เมื่อ TSH ≥ 2.5 mIU/L / ผลลบ: ให้ LT4 เมื่อ TSH > ขอบบนของค่าอ้างอิง"},{"tsh":"≥ 10 mIU/L","action":"ให้ LT4"}]},{"id":"TOOL-TSH-SCREEN","name":"ข้อบ่งชี้ตรวจ TSH ก่อนตั้งครรภ์","type":"list","src":"p.46","items":["ประวัติโรคไทรอยด์ หรืออาการสงสัย","Goiter หรือ thyroid antibody positive","ประวัติฉายรังสีศีรษะ/คอ หรือผ่าตัดไทรอยด์","Type 1 DM หรือ autoimmune disease อื่น","มีบุตรยาก หรือแท้งซ้ำ","BMI ≥ 40 kg/m²","ได้รับ amiodarone, lithium หรือเพิ่งได้สารทึบรังสี","โรคซึมเศร้า หรือ cognitive dysfunction","ประวัติครอบครัว autoimmune thyroid disease","อยู่ในพื้นที่ขาดไอโอดีน"]},{"id":"TOOL-SLICC","name":"SLICC classification criteria for SLE","type":"list","src":"p.50","rule":"≥ 4 criteria (อย่างน้อย 1 clinical และ 1 immunologic) หรือ biopsy-proven lupus nephritis ร่วมกับ ANA หรือ anti-DNA positive","clinical":["Acute cutaneous lupus","Chronic cutaneous lupus","Oral ulcers","Non-scarring alopecia","Arthritis","Serositis","Renal","Neurologic","Hemolytic anemia","Leukopenia","Thrombocytopenia (\u003c 100,000/mm³)"],"immunologic":["ANA","Anti-DNA","Anti-Sm","Antiphospholipid Ab","Low complement (C3, C4, CH50)","Direct Coombs' test (ไม่นับถ้ามี hemolytic anemia)"],"decision":{"cd":"CD-18","choice":"SLICC","date":"2026-09-22","evidence":[],"note":"ยืนยันการแก้: คู่มือพิมพ์ 'Non-scarring alopecia' ซ้ำ 2 ข้อ — ข้อ 3 ต้นฉบับ SLICC คือ oral ulcers"}},{"id":"TOOL-EULAR-SLE","name":"EULAR — ปัจจัยพยากรณ์ก่อนตั้งครรภ์ใน SLE","type":"table","src":"p.51","rows":[{"param":"Disease activity ใน 6–12 เดือนก่อนตั้งครรภ์","risk":"SLE flare, hypertensive disorder, fetal morbidity/mortality"},{"param":"Lupus nephritis (ประวัติหรือ active)","risk":"Renal flare, fetal loss, preterm delivery"},{"param":"Serological activity (anti-dsDNA, low C3/C4)","risk":"SLE flare, pregnancy loss"},{"param":"Previous adverse pregnancy outcome","risk":"APS: pregnancy complications"},{"param":"History of vascular thrombosis","risk":"APS: pregnancy morbidity"},{"param":"High-risk aPL profile","risk":"Preeclampsia, IUGR, preterm birth, maternal thrombosis"},{"param":"Anti-Ro/SSA และ/หรือ anti-La/SSB","risk":"Neonatal lupus, congenital heart block"}]},{"id":"TOOL-WHITE","name":"White classification (DM in pregnancy)","type":"table","src":"p.57","rows":[{"class":"A1","onset":"ขณะตั้งครรภ์","detail":"FPG \u003c 105, 2-hr PP \u003c 120 mg/dL","treatment":"ควบคุมอาหาร"},{"class":"A2","onset":"ขณะตั้งครรภ์","detail":"FPG > 105, 2-hr PP > 120 mg/dL","treatment":"อินซูลิน"},{"class":"B","onset":"อายุ > 20 ปี","duration":"\u003c 10 ปี","vascular":"ไม่มี"},{"class":"C","onset":"10–19 ปี","duration":"10–19 ปี","vascular":"ไม่มี"},{"class":"D","onset":"\u003c 10 ปี","duration":"> 20 ปี","vascular":"Benign retinopathy"},{"class":"F","vascular":"Nephropathy"},{"class":"R","vascular":"Proliferative retinopathy"},{"class":"H","vascular":"Heart disease"}],"decision":{"cd":"CD-18","choice":"WHITE","date":"2026-09-22","evidence":[],"note":"ยืนยันการแก้: คู่มือเขียน A1 ซ้ำสองแถว (แถวอินซูลินควรเป็น A2) และ class D ระยะเวลาพิมพ์ > 10 ปี (ต้นฉบับ ≥ 20 ปี) — KB ใช้ค่าตามต้นฉบับ"}},{"id":"TOOL-THAL-SEVERITY","name":"ระดับความรุนแรงธาลัสซีเมีย","type":"table","src":"p.66","rows":[{"level":"Severe","sign":"ซีดภายใน 2 ปี ได้เลือดครั้งแรกก่อนอายุ 4 ปี น้ำหนัก/ส่วนสูงต่ำกว่าเกณฑ์ thalassemia face ม้ามโตมาก","hb":"≤ 7 g/dL"},{"level":"Moderate","sign":"ซีด เหลือง ม้ามโต","hb":"> 7–9 g/dL"},{"level":"Mild","sign":"ซีด ม้ามโตเล็กน้อย","hb":"> 9 g/dL"},{"level":"Asymptomatic","sign":"ไม่มีอาการ ไม่ถือว่าเป็นโรค","hb":"ปกติ"}]},{"id":"TOOL-OMQSOFA","name":"Obstetrically modified qSOFA (omqSOFA)","type":"score","scope":"COULD","src":"p.30","items":[{"param":"Systolic BP (mmHg)","options":[["≥ 90",0],["\u003c 90",1]]},{"param":"Respiratory rate (/min)","options":[["\u003c 25",0],["≥ 25",1]]},{"param":"Mentation","options":[["Alert",0],["Not alert",1]]}],"interpret":[[2,"≥ 2: เพิ่มความเสี่ยงเสียชีวิต"],[0,"\u003c 2"]],"decision":{"cd":"CD-18","choice":"OMQ","date":"2026-09-22","evidence":[],"note":"ยืนยันการแก้: คู่มือพิมพ์ RR เป็น '\u003c 25' ทั้งสองช่อง — KB ใช้ ≥ 25 = 1 คะแนน"}},{"id":"TOOL-OSOFA","name":"Obstetrically modified SOFA (oSOFA)","type":"score","scope":"COULD","src":"p.30","items":[{"param":"PaO2/FiO2","options":[["≥ 400",0],["300 – \u003c 400",1],["\u003c 300",2]]},{"param":"Platelets (×10⁹/L)","options":[["≥ 150",0],["100–150",1],["\u003c 100",2]]},{"param":"Bilirubin (µmol/L)","options":[["≤ 20",0],["20–32",1],["> 32",2]]},{"param":"MAP (mmHg)","options":[["≥ 70",0],["\u003c 70",1],["Vasopressors required",2]]},{"param":"CNS","options":[["Alert",0],["Rousable by voice",1],["Rousable by pain",2]]},{"param":"Creatinine (µmol/L)","options":[["≤ 90",0],["91–120",1],["> 120",2]]}],"interpret":[[7,"> 6: ติดเชื้อรุนแรง อัตราตายสูง เฝ้าระวังใกล้ชิดใน ICU"],[0,"≤ 6"]],"decision":{"cd":"CD-18","choice":"OSOFA","date":"2026-09-22","evidence":[],"note":"ยืนยันการแก้: คู่มือเว้นว่างช่อง bilirubin 0 คะแนน — KB ใส่ ≤ 20"}},{"id":"TOOL-SOS","name":"Sepsis in Obstetrics Score (SOS)","type":"score","scope":"COULD","src":"p.31","items":[{"param":"Temperature (°C)","options":[["> 40.9",4],["39–40.9",3],["38.5–38.9",1],["36–38.4",0],["34–35.9",1],["32–33.9",2],["30–31.9",3],["\u003c 30",4]]},{"param":"Systolic BP (mmHg)","options":[["> 90",0],["70–90",2],["\u003c 70",4]]},{"param":"Heart rate (bpm)","options":[["> 179",4],["150–179",3],["130–149",2],["120–129",1],["≤ 119",0]]},{"param":"Respiratory rate (/min)","options":[["> 49",4],["35–49",3],["25–34",1],["12–24",0],["10–11",1],["6–9",2],["≤ 5",4]]},{"param":"SpO2 (%)","options":[["≥ 92",0],["90–91",1],["85–89",3],["\u003c 85",4]]},{"param":"WBC (×10³/µL)","options":[["> 39.9",4],["25–39.9",2],["17–24.9",1],["5.7–16.9",0],["3–5.6",1],["1–2.9",2],["\u003c 1",4]]},{"param":"Immature neutrophils (%)","options":[["≥ 10",2],["\u003c 10",0]]},{"param":"Lactic acid (mmol/L)","options":[["≥ 4",2],["\u003c 4",0]]}],"interpret":[[6,"≥ 6: มีแนวโน้มต้องเข้า ICU"],[0,"\u003c 6"]]},{"id":"TOOL-HEART-SIGNS","name":"Clinical indicators of heart disease during pregnancy","type":"list","src":"p.22-23","symptoms":["Progressive dyspnea or orthopnea","Nocturnal cough","Hemoptysis","Syncope","Chest pain"],"findings":["Cyanosis","Clubbing of fingers","Persistent neck vein distention","Systolic murmur grade ≥ 3/6","Diastolic murmur","Cardiomegaly","Persistent split S2","S4","Criteria for pulmonary hypertension"]},{"id":"TOOL-DM-DX","name":"เกณฑ์วินิจฉัยเบาหวาน (ADA)","type":"list","src":"p.56","items":["HbA1c ≥ 6.5%","FPG ≥ 126 mg/dL","Random plasma glucose ≥ 200 mg/dL ร่วมกับอาการ","2-hr plasma glucose (OGTT) ≥ 200 mg/dL"]}],"chapters":[{"no":"1","title":"Clinical guideline ใน Preconception clinic","author":"นพ.อังคาร ตรีนิติ","pdf_pages":"5-8"},{"no":"2","title":"วัคซีนสำหรับหญิงตั้งครรภ์","author":"พญ.สายทิพย์ ตัน","pdf_pages":"9-11"},{"no":"3","title":"การคุมกำเนิดในหญิงที่มีโรคประจำตัว (Contraception in medical disease)","author":"พญ.ธิดารัตน์ พรหมบุตร","pdf_pages":"13-19"},{"no":"4.1","title":"Cardiac disease in pregnancy","author":"นพ.อังคาร ตรีนิติ","pdf_pages":"21-25"},{"no":"4.2","title":"ภาวะติดเชื้อในมารดา (Maternal sepsis)","author":"นพ.ศิริชัย วิวัฒน์โรจนกุล","pdf_pages":"27-37"},{"no":"4.3","title":"Thyroid disease","author":"พญ.สิริเพ็ญ อึงพินิจพงษ์, พญ.พรทิพย์ ธีระวิทย์","pdf_pages":"39-47"},{"no":"4.4","title":"Systemic lupus erythematosus (SLE)","author":"พญ.กนกพร อิทธิวิศวกุล","pdf_pages":"49-53"},{"no":"4.5","title":"Diabetes mellitus","author":"กลุ่มงานสูติ-นรีเวชกรรม รพ.มหาราชนครราชสีมา","pdf_pages":"55-59"},{"no":"4.6","title":"Chronic hypertension","author":"กลุ่มงานสูติ-นรีเวชกรรม รพ.มหาราชนครราชสีมา","pdf_pages":"61-63"},{"no":"4.7","title":"Thalassemia","author":"กลุ่มงานสูติ-นรีเวชกรรม รพ.มหาราชนครราชสีมา","pdf_pages":"65-68"},{"no":"5","title":"การบริหารจัดการระบบส่งต่อสาขาสูติกรรม","author":"นพ.อังคาร ตรีนิติ","pdf_pages":"69-72"},{"no":"6","title":"ระบบรายงานมารดาตายในเขตสุขภาพที่ 9","author":"ศูนย์อนามัยที่ 9 นครราชสีมา","pdf_pages":"73-81"}],"drug_alerts_decision":{"cd":"CD-14","choice":"VPA,MTX,MMF,LEF,THAL,CYC,STATIN,ISO","date":"2026-09-22","evidence":[],"note":"รายการยานอกคู่มือที่ผู้ตัดสินเลือกเพิ่ม — รายการยังไม่ครบทุก teratogen ให้เภสัชกรทบทวนเป็นระยะ"}}</script>
+<script>
+/*!
+ * PCC Engine — Preconception Care Clinic rule engine
+ * Pure functions, no DOM. ใช้ร่วมกันระหว่าง browser และ node --test
+ * เนื้อหาทางคลินิกทั้งหมดมาจาก kb.json (SPEC §15.1)
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  else root.PCCEngine = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+  "use strict";
+
+  var LEVEL_RANK = { GREEN: 0, YELLOW: 1, RED: 2 };
+  var METHOD_SHORT = { CHC: "CHC", POP: "POP", DMPA: "DMPA", IMPLANT: "Implant", LNG_IUS: "LNG-IUS", CU_IUD: "Cu-IUD" };
+  var NOTE_LIMIT = 1500;
+
+  function arr(x) { return Array.isArray(x) ? x : x == null ? [] : [x]; }
+  function uniq(list) {
+    var seen = {}, out = [];
+    list.forEach(function (v) { if (v != null && v !== "" && !seen[v]) { seen[v] = true; out.push(v); } });
+    return out;
+  }
+
+  /* ---------------- BR-15 KB validation ---------------- */
+  function validateKB(kb) {
+    var errors = [];
+    if (!kb || typeof kb !== "object") return ["KB ไม่ใช่ JSON object"];
+    ["meta", "config", "intention", "pathways", "base_plan", "conditions", "mec", "drug_alerts"].forEach(function (k) {
+      if (!kb[k]) errors.push("ไม่มี key: " + k);
+    });
+    if (errors.length) return errors;
+    var ids = {}, methods = (kb.mec.methods || []).map(function (m) { return m.id; });
+    var consult = Object.keys(kb.config.consult_targets || {});
+    var mecIds = {};
+    function addId(id, where) { if (!id) errors.push("ไม่มี id ใน " + where); else if (ids[id]) errors.push("id ซ้ำ: " + id); else ids[id] = true; }
+    (kb.mec.rows || []).forEach(function (r) {
+      addId(r.id, "mec.rows"); mecIds[r.id] = true;
+      if (!r.src) errors.push(r.id + ": ไม่มี src");
+      methods.forEach(function (m) { var v = r.cat && r.cat[m]; if ([1, 2, 3, 4].indexOf(v) < 0) errors.push(r.id + ": category " + m + " ไม่ถูกต้อง"); });
+    });
+    function chkMec(list, where) { arr(list).forEach(function (x) { if (!mecIds[x]) errors.push(where + ": mec ref ไม่มีจริง " + x); }); }
+    function chkConsult(list, where) { arr(list).forEach(function (x) { if (consult.indexOf(x) < 0) errors.push(where + ": consult ไม่มีจริง " + x); }); }
+    var drugIds = {};
+    (kb.drug_alerts || []).forEach(function (d) { drugIds[d.id] = true; });
+    kb.conditions.forEach(function (c) {
+      addId(c.id, "conditions");
+      chkMec(c.mec_default, c.id); chkConsult(c.always_consult, c.id); chkConsult(c.consult_suggest, c.id);
+      (c.criteria || []).forEach(function (cr) {
+        addId(cr.id, c.id);
+        if (["RED", "YELLOW", "INFO"].indexOf(cr.level) < 0) errors.push(cr.id + ": level ไม่ถูกต้อง");
+        if (!cr.src) errors.push(cr.id + ": ไม่มี src");
+        chkMec(cr.mec, cr.id); if (cr.consult) chkConsult(cr.consult, cr.id);
+        if (cr.drug_link && !drugIds[cr.drug_link]) errors.push(cr.id + ": drug_link ไม่มีจริง");
+      });
+    });
+    (kb.general_modifiers || []).forEach(function (g) { addId(g.id, "general_modifiers"); chkMec(g.mec, g.id); if (g.consult) chkConsult(g.consult, g.id); });
+    kb.drug_alerts.forEach(function (d) {
+      addId(d.id, "drug_alerts"); chkMec(d.mec, d.id); if (d.consult) chkConsult(d.consult, d.id);
+      if (!d.src) errors.push(d.id + ": ไม่มี src");
+    });
+    return errors;
+  }
+
+  /* ---------------- helpers ---------------- */
+  function index(kb) {
+    var ix = { cond: {}, crit: {}, row: {}, drug: {}, mod: {}, method: {} };
+    kb.conditions.forEach(function (c) { ix.cond[c.id] = c; (c.criteria || []).forEach(function (cr) { ix.crit[cr.id] = { item: cr, cond: c }; }); });
+    kb.mec.rows.forEach(function (r) { ix.row[r.id] = r; });
+    kb.drug_alerts.forEach(function (d) { ix.drug[d.id] = d; });
+    (kb.general_modifiers || []).forEach(function (m) { ix.mod[m.id] = m; });
+    kb.mec.methods.forEach(function (m, i) { ix.method[m.id] = { tier: m.tier, order: i, label: m.label }; });
+    return ix;
+  }
+
+  function normalize(input) {
+    input = input || {};
+    return {
+      pregnant: input.pregnant === true,
+      ga_weeks: typeof input.ga_weeks === "number" && isFinite(input.ga_weeks) ? input.ga_weeks : null,
+      intention: input.intention || null,
+      ever_sex: input.ever_sex === true ? true : input.ever_sex === false ? false : null,
+      conditions: uniq(arr(input.conditions)),
+      criteria: input.criteria && typeof input.criteria === "object" ? input.criteria : {},
+      modifiers: uniq(arr(input.modifiers)),
+      drugs: uniq(arr(input.drugs))
+    };
+  }
+
+  function isTriggered(cr, v) {
+    if (cr.type === "tri") return v === true || (v === "unknown" && cr.unknown_as === true);
+    return v === true;
+  }
+
+  function clinicLabels(kb, clinic) {
+    return arr(clinic).map(function (k) { return (kb.config.clinics && kb.config.clinics[k]) || k; });
+  }
+
+  /* ---------------- evaluate ---------------- */
+  function evaluate(rawInput, kb) {
+    var ix = index(kb), inp = normalize(rawInput);
+    var selConds = inp.conditions.map(function (id) { return ix.cond[id]; }).filter(Boolean);
+    var selCondIds = selConds.map(function (c) { return c.id; });
+
+    var triggered = [], unknownLabs = [];
+    selConds.forEach(function (c) {
+      (c.criteria || []).forEach(function (cr) {
+        var v = inp.criteria[cr.id];
+        if (isTriggered(cr, v)) triggered.push({ item: cr, cond: c, unknown: v === "unknown" });
+        if (cr.type === "tri" && v === "unknown") unknownLabs.push("ตรวจเพิ่ม: " + cr.label);
+      });
+    });
+    var mods = inp.modifiers.map(function (id) { return ix.mod[id]; }).filter(Boolean);
+    var drugs = inp.drugs.map(function (id) { return ix.drug[id]; }).filter(function (d) {
+      return d && (!d.only_if_condition || selCondIds.indexOf(d.only_if_condition) >= 0);
+    });
+
+    /* BR-01 level */
+    var level = "GREEN";
+    function bump(l) { if (LEVEL_RANK[l] != null && LEVEL_RANK[l] > LEVEL_RANK[level]) level = l; }
+    triggered.forEach(function (t) { bump(t.item.level); });
+    drugs.forEach(function (d) { bump(d.level); });
+
+    var reasons = triggered.filter(function (t) { return t.item.level !== "INFO"; }).map(function (t) {
+      return { id: t.item.id, kind: "criterion", level: t.item.level, label: t.item.label, action: t.item.action || null,
+        condition: t.cond.label, src: t.item.src, review: t.item.review || null, decision: t.item.decision || null };
+    });
+    drugs.filter(function (d) { return d.level === "RED" || d.level === "YELLOW"; }).forEach(function (d) {
+      reasons.push({ id: d.id, kind: "drug", level: d.level, label: d.name + " — " + d.alert, action: d.action || null,
+        condition: "ยาที่ใช้อยู่", src: d.src, review: d.review || null, decision: d.decision || null });
+    });
+    reasons.sort(function (a, b) { return LEVEL_RANK[b.level] - LEVEL_RANK[a.level]; });
+
+    var infos = triggered.filter(function (t) { return t.item.level === "INFO"; }).map(function (t) {
+      return { id: t.item.id, label: t.item.label + (t.unknown ? " (ยังไม่ทราบผล — ถือเป็นจริง)" : ""), condition: t.cond.label, src: t.item.src };
+    }).concat(mods.map(function (m) { return { id: m.id, label: m.label, condition: "ข้อมูลทั่วไป", src: m.src }; }));
+
+    /* BR-02 consult */
+    var cmap = {}, corder = [];
+    function addConsult(key, required, from) {
+      var t = kb.config.consult_targets[key]; if (!t) return;
+      if (!cmap[key]) { cmap[key] = { key: key, label: t.label, destination: t.destination, required: false, from: [] }; corder.push(key); }
+      if (required) cmap[key].required = true;
+      if (from && cmap[key].from.indexOf(from) < 0) cmap[key].from.push(from);
+    }
+    selConds.forEach(function (c) {
+      arr(c.always_consult).forEach(function (k) { addConsult(k, true, c.label); });
+      arr(c.consult_suggest).forEach(function (k) { addConsult(k, false, c.label); });
+    });
+    triggered.forEach(function (t) { if (t.item.consult) addConsult(t.item.consult, true, t.item.label); });
+    drugs.forEach(function (d) { if (d.consult) addConsult(d.consult, true, d.name); });
+    mods.forEach(function (m) { if (m.consult) addConsult(m.consult, false, m.label); });
+    var consults = corder.map(function (k) { return cmap[k]; }).sort(function (a, b) { return (b.required ? 1 : 0) - (a.required ? 1 : 0); });
+
+    /* BR-04..08 route & pathway */
+    var route = null, pathway = null;
+    if (inp.pregnant) {
+      route = "PREGNANT";
+      var pg = kb.pathways.pregnant, key;
+      if (level === "RED") {
+        if (inp.ga_weeks == null) key = "CANNOT_CONTINUE_UNKNOWN_GA";
+        else key = inp.ga_weeks < pg.ga_cutoff_weeks ? "CANNOT_CONTINUE_LT_CUTOFF" : "CANNOT_CONTINUE_GE_CUTOFF";
+      } else key = "CAN_CONTINUE";
+      var p = pg[key] || { action: "ระบุอายุครรภ์เพื่อเลือกเส้นทางการดูแล" };
+      pathway = { key: key, clinics: clinicLabels(kb, p.clinic), clinicKeys: arr(p.clinic), action: p.action, register: pg.register };
+    } else {
+      var ans = (kb.intention.answers || []).filter(function (a) { return a.id === inp.intention; })[0];
+      route = ans ? ans.route : null;
+      var np = kb.pathways.not_pregnant;
+      if (route === "PRECONCEPTION_ASSESS" || route === "BOTH") {
+        var pp = np.PRECONCEPTION_ASSESS[level];
+        pathway = { key: level, clinics: clinicLabels(kb, pp.clinic), clinicKeys: arr(pp.clinic), action: pp.action, meds: pp.meds || null };
+      } else if (route === "CONTRACEPTION") {
+        var ck = inp.ever_sex === false ? "NEVER_SEX" : "EVER_SEX";
+        var cp = np.CONTRACEPTION[ck];
+        pathway = { key: ck, clinics: clinicLabels(kb, cp.clinic), clinicKeys: arr(cp.clinic), action: cp.action };
+      }
+    }
+    var preconPath = !!(pathway && pathway.clinicKeys.indexOf("PRECONCEPTION") >= 0);
+
+    /* meds, plan, targets */
+    var meds = [];
+    if (preconPath) meds = level === "GREEN" ? arr(kb.base_plan.ready_meds) : arr(pathway.meds);
+    var plan = [], targets = [];
+    selConds.forEach(function (c) {
+      arr(c.plan).forEach(function (x) { plan.push({ condition: c.label, text: x }); });
+      arr(c.targets).forEach(function (x) { targets.push({ condition: c.label, text: x }); });
+    });
+
+    /* BR-03 labs */
+    var labs = preconPath ? arr(kb.base_plan.base_labs).slice() : [];
+    selConds.forEach(function (c) { labs = labs.concat(arr(c.workup)); });
+    triggered.forEach(function (t) { labs = labs.concat(arr(t.item.labs)); });
+    drugs.forEach(function (d) { labs = labs.concat(arr(d.labs)); });
+    labs = uniq(labs.concat(unknownLabs));
+
+    /* counseling */
+    var counseling = [];
+    if (preconPath) arr(kb.base_plan.lifestyle_counseling).forEach(function (x) { counseling.push({ from: "ทั่วไป", text: x }); });
+    selConds.forEach(function (c) { arr(c.counseling).forEach(function (x) { counseling.push({ from: c.label, text: x }); }); });
+    triggered.forEach(function (t) { if (t.item.counsel) counseling.push({ from: t.item.label, text: t.item.counsel }); });
+    mods.forEach(function (m) { if (m.counsel) counseling.push({ from: m.label, text: m.counsel }); });
+
+    var drugAlerts = drugs.map(function (d) {
+      return { id: d.id, name: d.name, level: d.level, alert: d.alert, action: d.action || null, src: d.src, review: d.review || null };
+    });
+
+    /* BR-09..11 MEC */
+    var used = [];
+    function useRow(rid, from) { var r = ix.row[rid]; if (r && !used.some(function (u) { return u.row.id === rid && u.from === from; })) used.push({ row: r, from: from }); }
+    selConds.forEach(function (c) {
+      var withMec = triggered.filter(function (t) { return t.cond.id === c.id && arr(t.item.mec).length; });
+      if (withMec.length) withMec.forEach(function (t) { arr(t.item.mec).forEach(function (r) { useRow(r, t.item.label); }); });
+      else arr(c.mec_default).forEach(function (r) { useRow(r, c.label); });
+    });
+    mods.forEach(function (m) { arr(m.mec).forEach(function (r) { useRow(r, m.label); }); });
+    drugs.forEach(function (d) { arr(d.mec).forEach(function (r) { useRow(r, d.name); }); });
+
+    var byMethod = {};
+    kb.mec.methods.forEach(function (m) {
+      var max = 1;
+      used.forEach(function (u) { if (u.row.cat[m.id] > max) max = u.row.cat[m.id]; });
+      var limiting = max > 1 ? used.filter(function (u) { return u.row.cat[m.id] === max; }).map(function (u) {
+        return { rowId: u.row.id, rowLabel: u.row.label, from: u.from };
+      }) : [];
+      byMethod[m.id] = { cat: max, limiting: limiting };
+    });
+    var order = kb.mec.methods.map(function (m) { return m.id; });
+    var recommended = order.filter(function (k) { return byMethod[k].cat <= 2; }).sort(function (a, b) {
+      return byMethod[a].cat - byMethod[b].cat || ix.method[a].tier - ix.method[b].tier || ix.method[a].order - ix.method[b].order;
+    });
+    var mec = {
+      byMethod: byMethod,
+      recommended: recommended,
+      notAdvised: order.filter(function (k) { return byMethod[k].cat === 3; }),
+      contraindicated: order.filter(function (k) { return byMethod[k].cat === 4; }),
+      rowsUsed: used.map(function (u) { return { id: u.row.id, label: u.row.label, from: u.from, cat: u.row.cat, note: u.row.note || null }; }),
+      notes: uniq(used.map(function (u) { return u.row.note; }).concat(selConds.map(function (c) { return c.contraception_note ? c.label + ": " + c.contraception_note : null; }))),
+      permanent: level === "RED" ? kb.mec.permanent_option : null,
+      focus: route === "CONTRACEPTION" || route === "BOTH" || level !== "GREEN"
+    };
+
+    /* BR-14 review flags */
+    var flags = [];
+    function addFlag(id, rv) { if (rv && !flags.some(function (f) { return f.id === id; })) flags.push({ id: id, flag: rv.flag, note: rv.note }); }
+    triggered.forEach(function (t) { addFlag(t.item.id, t.item.review); });
+    drugs.forEach(function (d) { addFlag(d.id, d.review); });
+    used.forEach(function (u) { addFlag(u.row.id, u.row.review); });
+
+    return {
+      input: inp, level: level, levelText: (kb.meta.levels || {})[level] || level, route: route,
+      conditions: selConds.map(function (c) { return { id: c.id, label: c.label }; }),
+      reasons: reasons, infos: infos, pathway: pathway, consults: consults, labs: labs,
+      meds: meds, plan: plan, targets: targets, counseling: counseling, drugAlerts: drugAlerts,
+      mec: mec, flags: flags,
+      kb: { version: kb.meta.version, status: kb.meta.status }
+    };
+  }
+
+  /* ---------------- BR-16 copy note ---------------- */
+  function thaiDateNum(d) {
+    d = d || new Date();
+    function p(n) { return (n < 10 ? "0" : "") + n; }
+    return p(d.getDate()) + "/" + p(d.getMonth() + 1) + "/" + (d.getFullYear() + 543);
+  }
+
+  function buildNote(result, kb, date) {
+    var r = result, inp = r.input;
+    var intent = (kb.intention.answers || []).filter(function (a) { return a.id === inp.intention; })[0];
+    var head = "[PCC | KB " + r.kb.version + " " + r.kb.status + " | " + thaiDateNum(date) + "]";
+    var status = inp.pregnant
+      ? "สถานะ: ตั้งครรภ์" + (inp.ga_weeks != null ? " GA " + inp.ga_weeks + " สัปดาห์" : "")
+      : "สถานะ: ไม่ตั้งครรภ์ | ต้องการตั้งครรภ์ใน 1 ปี: " + (intent ? intent.label : "-") + (inp.intention === "NO" ? " | เคยมีเพศสัมพันธ์: " + (inp.ever_sex === false ? "ไม่" : "ใช่") : "");
+    var conds = "โรค: " + (r.conditions.length ? r.conditions.map(function (c) { return c.label; }).join(", ") : "ไม่มีโรคประจำตัวที่เลือก");
+    var lvl = "ผลประเมิน: " + r.level + " — " + r.levelText;
+    var reasonLines = r.reasons.map(function (x) { return " - " + x.label + (x.action ? " → " + x.action : "") + " (" + x.src + ")"; });
+    var planLine = r.pathway ? "Plan: " + (r.pathway.clinics.length ? r.pathway.clinics.join(" + ") + " — " : "") + r.pathway.action : null;
+    var medLine = r.meds.length ? "ยา: " + r.meds.join(", ") + (r.plan.length ? " · " + r.plan.map(function (p) { return p.text; }).join(" · ") : "") : null;
+    var req = r.consults.filter(function (c) { return c.required; }).map(function (c) { return c.label; });
+    var sug = r.consults.filter(function (c) { return !c.required; }).map(function (c) { return c.label; });
+    var consultLine = req.length || sug.length ? "Consult: " + (req.join(", ") || "-") + (sug.length ? " | พิจารณาส่ง: " + sug.join(", ") : "") : null;
+    var labLine = r.labs.length ? "Lab: " + r.labs.join(", ") : null;
+    var rec = r.mec.recommended.map(function (k) { return METHOD_SHORT[k] + " (" + r.mec.byMethod[k].cat + ")"; });
+    var bad = r.mec.notAdvised.concat(r.mec.contraindicated).map(function (k) { return METHOD_SHORT[k] + " (" + r.mec.byMethod[k].cat + ")"; });
+    var mecLines = ["คุมกำเนิดที่เหมาะ: " + (rec.join(", ") || "-")];
+    if (bad.length) mecLines.push("ไม่ควร/ห้าม: " + bad.join(", "));
+    var tail = "* เครื่องมือช่วยตัดสินใจ ไม่ใช้แทนดุลยพินิจแพทย์";
+
+    function assemble(reasonsL, labL) {
+      return [head, status, conds, lvl].concat(reasonsL, [planLine, medLine, consultLine, labL], mecLines, [tail])
+        .filter(function (x) { return x; }).join("\n");
+    }
+    var text = assemble(reasonLines, labLine);
+    if (text.length > NOTE_LIMIT && labLine) text = assemble(reasonLines, "Lab: " + r.labs.length + " รายการ ตามใบพิมพ์");
+    if (text.length > NOTE_LIMIT && reasonLines.length > 4) {
+      var shortR = reasonLines.slice(0, 4).map(function (l) { return l.length > 110 ? l.slice(0, 107) + "…" : l; });
+      shortR.push(" - และอีก " + (reasonLines.length - 4) + " ข้อ ตามใบพิมพ์");
+      text = assemble(shortR, "Lab: " + r.labs.length + " รายการ ตามใบพิมพ์");
+    }
+    return text;
+  }
+
+  return { validateKB: validateKB, evaluate: evaluate, buildNote: buildNote, thaiDateNum: thaiDateNum,
+    LEVEL_RANK: LEVEL_RANK, METHOD_SHORT: METHOD_SHORT, NOTE_LIMIT: NOTE_LIMIT };
+});
+
+</script>
+<script>
+(function () {
+  "use strict";
+  var E = window.PCCEngine;
+  var app = document.getElementById("app");
+  var KB = null, KB_ERRORS = [];
+  try { KB = JSON.parse(document.getElementById("kb-data").textContent); KB_ERRORS = E.validateKB(KB); }
+  catch (err) { KB_ERRORS = ["อ่าน kb.json ไม่ได้: " + err.message]; }
+  var SHA = (document.querySelector('meta[name="pcc-kb-sha256"]') || {}).content || "-";
+
+  /* ---------- helpers ---------- */
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function link(url, text) { return /^https:\/\//.test(url || "") ? '<a class="text-orange-700 underline decoration-orange-300" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(text) + "</a>" : esc(text); }
+  function toggle(list, v) { var i = list.indexOf(v); if (i >= 0) list.splice(i, 1); else list.push(v); }
+  function condLabel(id) { var c = KB.conditions.find(function (x) { return x.id === id; }); return c ? c.label : id; }
+  var LV = {
+    RED: { pill: "bg-rose-100 text-rose-700 ring-rose-200", box: "bg-rose-50 border-rose-300", text: "text-rose-800" },
+    YELLOW: { pill: "bg-amber-100 text-amber-800 ring-amber-200", box: "bg-amber-50 border-amber-300", text: "text-amber-900" },
+    GREEN: { pill: "bg-emerald-100 text-emerald-700 ring-emerald-200", box: "bg-emerald-50 border-emerald-300", text: "text-emerald-800" },
+    INFO: { pill: "bg-slate-100 text-slate-600 ring-slate-200" }
+  };
+  var CAT = { 1: "bg-emerald-100 text-emerald-800", 2: "bg-lime-100 text-lime-800", 3: "bg-amber-200 text-amber-900", 4: "bg-rose-200 text-rose-900" };
+  function pill(level) { return LV[level] ? '<span class="inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ' + LV[level].pill + '">' + level + "</span>" : ""; }
+  function catBadge(c) { return '<span class="inline-flex min-w-[2rem] justify-center rounded-lg px-2 py-0.5 text-sm font-bold ' + CAT[c] + '" title="' + esc(KB.mec.categories[c]) + '">' + c + "</span>"; }
+  function flagMark(rv) { return rv && KB.meta.status !== "APPROVED" ? ' <span class="text-amber-600" title="' + esc(rv.flag + ": " + rv.note) + '" aria-label="มีประเด็นรอทบทวน">⚠</span>' : ""; }
+  function decisionBadge(d) { return d ? '<span class="rounded bg-orange-50 px-1.5 text-[11px] font-semibold text-orange-700 ring-1 ring-orange-200">' + esc(d.cd) + "</span>" : ""; }
+  function evidenceDetails(d) {
+    if (!d) return "";
+    var ev = d.evidence || [];
+    if (!ev.length) return d.note ? '<p class="mt-1 text-xs text-gray-500">' + esc(d.cd + ": " + d.note) + "</p>" : "";
+    return '<details class="mt-1 text-xs"><summary class="cursor-pointer text-orange-700">คำตัดสิน ' + esc(d.cd) + " · หลักฐาน " + ev.length + ' รายการ</summary><ul class="mt-1 list-disc space-y-1 pl-4 text-gray-600">' +
+      ev.map(function (e) { return "<li>" + esc(e.text) + " — " + link(e.url, e.src) + "</li>"; }).join("") + "</ul>" +
+      (d.note ? '<p class="mt-1 text-gray-500">' + esc(d.note) + "</p>" : "") + "</details>";
+  }
+
+  /* ---------- state (in-memory only, BR-17) ---------- */
+  function newState() { return { step: 1, maxStep: 1, pregnant: null, ga: null, intention: null, everSex: null, conditions: [], criteria: {}, modifiers: [], drugs: [], last: null }; }
+  var S = newState();
+  function toInput() {
+    return { pregnant: S.pregnant === true, ga_weeks: S.ga, intention: S.pregnant ? null : S.intention, ever_sex: S.everSex,
+      conditions: S.conditions.slice(), criteria: S.criteria, modifiers: S.modifiers.slice(), drugs: S.drugs.slice() };
+  }
+  function step1Valid() {
+    if (S.pregnant === true) return typeof S.ga === "number" && S.ga >= 1 && S.ga <= 45;
+    if (S.pregnant === false) return !!S.intention && (S.intention !== "NO" || S.everSex !== null);
+    return false;
+  }
+
+  /* ---------- assess ---------- */
+  var STEPS = ["สถานะ", "โรคประจำตัว", "รายละเอียดและยา", "ผลลัพธ์"];
+  function stepper() {
+    return '<ol class="no-print mb-5 grid grid-cols-4 gap-2">' + STEPS.map(function (s, i) {
+      var n = i + 1, cur = n === S.step, done = n < S.step, can = n <= S.maxStep;
+      return '<li><button type="button" data-act="goto" data-v="' + n + '" ' + (can ? "" : "disabled") + ' class="w-full rounded-xl px-2 py-2 text-left text-xs sm:text-sm ' +
+        (cur ? "bg-white ring-2 ring-orange-400" : "bg-white/60") + (can ? "" : " cursor-not-allowed opacity-50") + '"' + (cur ? ' aria-current="step"' : "") + '>' +
+        '<span class="block text-[11px] ' + (done ? "text-emerald-600" : "text-gray-400") + '">ขั้น ' + n + (done ? " ✓" : "") + '</span><span class="font-semibold text-gray-800">' + s + "</span></button></li>";
+    }).join("") + "</ol>";
+  }
+  function choice(act, v, title, sub, on) {
+    return '<button type="button" data-act="' + act + '" data-v="' + esc(v) + '" aria-pressed="' + on + '" class="opt' + (on ? " opt-on" : "") + '">' +
+      '<span class="block font-semibold text-gray-800">' + esc(title) + "</span>" + (sub ? '<span class="block text-sm text-gray-500">' + esc(sub) + "</span>" : "") + "</button>";
+  }
+  function check(act, id, label, on, src, extra) {
+    return '<label class="chk' + (on ? " chk-on" : "") + '"><input type="checkbox" data-act="' + act + '" data-v="' + esc(id) + '" ' + (on ? "checked" : "") + ' class="mt-1 h-5 w-5 shrink-0 accent-orange-500">' +
+      '<span class="min-w-0"><span class="text-gray-800">' + esc(label) + "</span>" + (extra || "") + (src ? '<span class="block text-xs text-gray-400">' + esc(src) + "</span>" : "") + "</span></label>";
+  }
+  function navButtons(back, nextDisabled, nextLabel) {
+    return '<div class="no-print mt-5 flex items-center justify-between gap-3">' + (back ? '<button type="button" class="btn" data-act="back">ย้อนกลับ</button>' : "<span></span>") +
+      '<button type="button" class="btn-primary" data-act="next" id="nextBtn" ' + (nextDisabled ? "disabled" : "") + ">" + (nextLabel || "ถัดไป") + "</button></div>";
+  }
+
+  function step1() {
+    var q = KB.intention;
+    var h = '<section class="card"><h2 class="h2">ผู้ป่วยตั้งครรภ์อยู่หรือไม่</h2><div class="mt-3 grid gap-3 sm:grid-cols-2">' +
+      choice("preg", "0", "ยังไม่ตั้งครรภ์", "ประเมินความพร้อมก่อนตั้งครรภ์ หรือวางแผนคุมกำเนิด", S.pregnant === false) +
+      choice("preg", "1", "ตั้งครรภ์แล้ว", "ประเมินว่าตั้งครรภ์ต่อได้หรือไม่ ตามอายุครรภ์", S.pregnant === true) + "</div>";
+    if (S.pregnant === true) {
+      h += '<div class="mt-5"><label for="ga" class="lbl">อายุครรภ์ (สัปดาห์)</label><input id="ga" type="number" inputmode="numeric" min="1" max="45" value="' + (S.ga == null ? "" : S.ga) + '" class="inp w-40" data-input="ga">' +
+        '<p class="hint">ใช้แยกเส้นทางที่อายุครรภ์ ' + KB.pathways.pregnant.ga_cutoff_weeks + " สัปดาห์</p></div>";
+    }
+    if (S.pregnant === false) {
+      h += '<div class="mt-6"><h3 class="h3">' + esc(q.question_th) + '</h3><p class="hint">' + esc(q.note) + "</p>" +
+        '<div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">' + q.answers.map(function (a) { return choice("intent", a.id, a.label, "", S.intention === a.id); }).join("") + "</div>";
+      if (S.intention === "NO") {
+        h += '<div class="mt-5"><h3 class="h3">เคยมีเพศสัมพันธ์หรือไม่</h3><div class="mt-3 grid max-w-sm grid-cols-2 gap-3">' +
+          choice("sex", "1", "เคย", "", S.everSex === true) + choice("sex", "0", "ไม่เคย", "", S.everSex === false) + "</div></div>";
+      }
+      h += "</div>";
+    }
+    return h + "</section>" + navButtons(false, !step1Valid());
+  }
+
+  function step2() {
+    var h = '<section class="card"><h2 class="h2">โรคประจำตัว</h2><p class="hint">เลือกได้หลายโรค · ถ้าไม่มีโรคประจำตัวกดถัดไปได้เลย</p><div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">';
+    KB.conditions.forEach(function (c) {
+      var on = S.conditions.indexOf(c.id) >= 0;
+      h += '<button type="button" data-act="cond" data-v="' + c.id + '" aria-pressed="' + on + '" class="opt' + (on ? " opt-on" : "") + '"><span class="block font-semibold text-gray-800">' + esc(c.label) +
+        '</span><span class="block text-xs text-gray-500">บท ' + esc(c.chapter) + " · " + c.criteria.length + " เกณฑ์</span></button>";
+    });
+    h += '</div></section><section class="card mt-4"><h2 class="h2">ข้อมูลทั่วไป</h2><div class="mt-3 grid gap-2 sm:grid-cols-2">' +
+      KB.general_modifiers.map(function (m) { return check("mod", m.id, m.label, S.modifiers.indexOf(m.id) >= 0, m.src); }).join("") + "</div></section>";
+    return h + navButtons(true, false);
+  }
+
+  function ord(l) { return { RED: 0, YELLOW: 1, INFO: 2 }[l]; }
+  function critRow(cr) {
+    var bar = { RED: "border-l-rose-400", YELLOW: "border-l-amber-400", INFO: "border-l-slate-300" }[cr.level];
+    var v = S.criteria[cr.id];
+    var body = '<span class="min-w-0 flex-1"><span class="text-gray-800">' + esc(cr.label) + "</span>" + flagMark(cr.review) +
+      '<span class="block text-xs text-gray-400">' + esc(cr.src) + (cr.decision ? " · " + esc(cr.decision.cd) : "") + "</span></span>";
+    if (cr.type === "tri") {
+      var opts = [["false", "ไม่ใช่"], ["true", "ใช่"], ["unknown", "ไม่ทราบ"]];
+      return '<div class="crit border-l-4 ' + bar + '"><div class="flex flex-wrap items-center gap-3">' + pill(cr.level) + body + '<div class="seg" role="group" aria-label="' + esc(cr.label) + '">' +
+        opts.map(function (o) {
+          var on = (o[0] === "true" && v === true) || (o[0] === "unknown" && v === "unknown") || (o[0] === "false" && v !== true && v !== "unknown");
+          return '<button type="button" data-act="tri" data-id="' + cr.id + '" data-v="' + o[0] + '" aria-pressed="' + on + '" class="' + (on ? "seg-on" : "") + '">' + o[1] + "</button>";
+        }).join("") + "</div></div></div>";
+    }
+    return '<label class="crit border-l-4 ' + bar + " flex cursor-pointer items-start gap-3" + (v === true ? " chk-on" : "") + '"><input type="checkbox" data-act="crit" data-v="' + cr.id + '" ' +
+      (v === true ? "checked" : "") + ' class="mt-1 h-5 w-5 shrink-0 accent-orange-500">' + pill(cr.level) + body + "</label>";
+  }
+
+  function step3() {
+    var h = "";
+    if (!S.conditions.length) h += '<section class="card mb-4"><p class="text-gray-600">ไม่ได้เลือกโรคประจำตัว — ตรวจรายการยาด้านล่างแล้วดูผลลัพธ์ได้เลย</p></section>';
+    S.conditions.forEach(function (id) {
+      var c = KB.conditions.find(function (x) { return x.id === id; }); if (!c) return;
+      var crits = c.criteria.slice().sort(function (a, b) { return ord(a.level) - ord(b.level); });
+      h += '<section class="card mb-4"><div class="flex flex-wrap items-baseline justify-between gap-2"><h2 class="h2">' + esc(c.label) + '</h2><span class="text-xs text-gray-400">' + esc(c.src || "") + "</span></div>";
+      if (!crits.length) h += '<p class="hint mt-2">' + esc(c.note || "ไม่มีเกณฑ์เพิ่มเติม") + "</p>";
+      h += '<div class="mt-3 space-y-2">' + crits.map(critRow).join("") + "</div></section>";
+    });
+    h += '<section class="card"><div class="flex flex-wrap items-center justify-between gap-2"><h2 class="h2">ยาที่ใช้อยู่</h2><input type="search" class="inp w-full sm:w-64" placeholder="ค้นหายา" data-input="drugFilter" aria-label="ค้นหายา"></div>' +
+      '<div class="mt-3 grid gap-2 sm:grid-cols-2" id="drugList">' + KB.drug_alerts.map(function (d) {
+        var extra = ' <span class="ml-1">' + pill(d.level) + '</span><span class="block text-xs text-gray-500">' + esc(d.alert) +
+          (d.only_if_condition ? " · เตือนเฉพาะเมื่อมี " + esc(condLabel(d.only_if_condition)) : "") + "</span>";
+        return '<div data-drug="' + esc((d.name + " " + d.alert).toLowerCase()) + '">' + check("drug", d.id, d.name, S.drugs.indexOf(d.id) >= 0, null, extra) + "</div>";
+      }).join("") + "</div></section>";
+    return h + navButtons(true, false, "ดูผลลัพธ์");
+  }
+
+  function statusLine(r) {
+    var inp = r.input;
+    if (inp.pregnant) return "ตั้งครรภ์ อายุครรภ์ " + inp.ga_weeks + " สัปดาห์";
+    var a = KB.intention.answers.find(function (x) { return x.id === inp.intention; });
+    return "ไม่ตั้งครรภ์ · ต้องการตั้งครรภ์ใน 1 ปี: " + (a ? a.label : "-") + (inp.intention === "NO" ? " · " + (inp.ever_sex === false ? "ไม่เคยมีเพศสัมพันธ์" : "เคยมีเพศสัมพันธ์") : "");
+  }
+  function listCard(title, body, extraCls) { return '<section class="card ' + (extraCls || "") + '"><h2 class="h2">' + title + "</h2>" + body + "</section>"; }
+
+  function mecBlock(r) {
+    var rec = r.mec.recommended.map(function (k, i) {
+      return '<span class="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-sm ring-1 ring-orange-200"><span class="text-xs text-gray-400">' + (i + 1) + "</span><b>" + esc(E.METHOD_SHORT[k]) + "</b>" + catBadge(r.mec.byMethod[k].cat) + "</span>";
+    }).join(" ");
+    var rows = KB.mec.methods.map(function (m) {
+      var b = r.mec.byMethod[m.id];
+      var lim = b.limiting.length ? b.limiting.map(function (l) { return esc(l.from) + (l.from !== l.rowLabel ? ' <span class="text-xs text-gray-400">(' + esc(l.rowLabel) + ")</span>" : ""); }).join("<br>") : '<span class="text-gray-400">—</span>';
+      return '<tr class="border-t border-orange-100 align-top"><td class="py-2 pr-3"><span class="font-semibold text-gray-800">' + esc(E.METHOD_SHORT[m.id]) + '</span><span class="block text-xs text-gray-500">' + esc(m.label) + "</span></td><td class=\"py-2 pr-3\">" + catBadge(b.cat) + '</td><td class="py-2 text-gray-600">' + lim + "</td></tr>";
+    }).join("");
+    var notes = r.mec.notes.length ? '<ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-gray-600">' + r.mec.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "";
+    return '<section class="card"><div class="flex flex-wrap items-baseline justify-between gap-2"><h2 class="h2">การคุมกำเนิด (MEC)</h2>' + (r.mec.focus ? '<span class="text-xs font-semibold text-orange-700">ควรพิจารณาในรายนี้</span>' : "") + "</div>" +
+      '<p class="hint">เรียงตาม category แล้วตามประสิทธิภาพ · category ของแต่ละวิธีเป็นค่าสูงสุดจากทุกภาวะที่เลือก</p>' +
+      '<div class="mt-3 flex flex-wrap gap-2">' + (rec || '<span class="text-gray-500">ไม่มีวิธีที่ category ≤ 2</span>') + "</div>" +
+      (r.mec.permanent ? '<p class="mt-3 rounded-xl bg-rose-50 p-3 text-sm text-rose-800">ระดับ RED: แนะนำวิธีประสิทธิภาพสูง และพิจารณาคุมกำเนิดถาวรตามความสมัครใจ — ' + esc(r.mec.permanent) + "</p>" : "") +
+      '<div class="mt-4 overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left text-gray-500"><th class="py-2 pr-3 font-semibold">วิธี</th><th class="py-2 pr-3 font-semibold">Category</th><th class="py-2 font-semibold">ภาวะที่เป็นตัวจำกัด</th></tr></thead><tbody>' + rows + "</tbody></table></div>" + notes + "</section>";
+  }
+
+  function step4() {
+    var r = E.evaluate(toInput(), KB); S.last = r;
+    var lv = LV[r.level];
+    var h = '<div class="print-only mb-3 text-sm">PCC — ใบสรุปผลประเมิน · ' + esc(E.thaiDateNum(new Date())) + " · KB v" + esc(KB.meta.version) + " " + esc(KB.meta.status) + " · SHA-256 " + esc(SHA.slice(0, 16)) + "…</div>";
+    h += '<section class="rounded-2xl border-2 p-5 ' + lv.box + '"><div class="flex flex-wrap items-center gap-3"><span class="text-3xl font-bold ' + lv.text + '">' + r.level + '</span><span class="text-lg font-semibold ' + lv.text + '">' + esc(r.levelText) + "</span></div>" +
+      '<p class="mt-2 text-sm text-gray-700">' + esc(statusLine(r)) + " · โรค: " + esc(r.conditions.map(function (c) { return c.label; }).join(", ") || "ไม่มี") + "</p>" +
+      (r.flags.length && KB.meta.status !== "APPROVED" ? '<p class="mt-2 text-sm text-amber-800">⚠ มี ' + r.flags.length + " rule ที่ใช้ในรายนี้ยังรอทบทวน: " + esc(r.flags.map(function (f) { return f.id; }).join(", ")) + "</p>" : "") + "</section>";
+
+    var cards = [];
+    if (r.pathway) {
+      cards.push(listCard("เส้นทางการดูแล", '<div class="mt-2 flex flex-wrap gap-2">' + r.pathway.clinics.map(function (c) { return '<span class="rounded-full bg-orange-100 px-3 py-1 text-sm font-semibold text-orange-800">' + esc(c) + "</span>"; }).join("") + "</div>" +
+        '<p class="mt-2 text-gray-800">' + esc(r.pathway.action) + "</p>" + (r.pathway.register ? '<p class="hint mt-2">' + esc(r.pathway.register) + "</p>" : "")));
+    }
+    cards.push(listCard("เหตุผล", r.reasons.length ? '<ul class="mt-2 space-y-3">' + r.reasons.map(function (x) {
+      return '<li class="flex gap-2">' + pill(x.level) + '<div class="min-w-0"><div class="text-gray-800">' + esc(x.label) + flagMark(x.review) + "</div>" + (x.action ? '<div class="text-sm text-gray-600">→ ' + esc(x.action) + "</div>" : "") +
+        '<div class="text-xs text-gray-400">' + esc(x.condition) + " · " + esc(x.src) + "</div></div></li>";
+    }).join("") + "</ul>" : '<p class="mt-2 text-gray-600">ไม่พบเกณฑ์ที่เป็นข้อห้ามหรือต้องเลื่อนการตั้งครรภ์</p>'));
+    cards.push(listCard("ส่งปรึกษา", r.consults.length ? '<ul class="mt-2 space-y-2">' + r.consults.map(function (c) {
+      return '<li><span class="font-semibold text-gray-800">' + esc(c.label) + '</span> <span class="text-xs ' + (c.required ? "text-rose-700" : "text-gray-500") + '">' + (c.required ? "ส่งปรึกษา" : "พิจารณาส่ง") + "</span>" +
+        '<span class="block text-xs text-gray-500">ปลายทาง: ' + esc(c.destination) + " · จาก " + esc(c.from.join(", ")) + "</span></li>";
+    }).join("") + "</ul>" : '<p class="mt-2 text-gray-600">ไม่มี</p>'));
+    var medBody = (r.meds.length ? '<ul class="mt-2 list-disc pl-5 text-gray-800">' + r.meds.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul>" : '<p class="mt-2 text-gray-600">ไม่มียาเตรียมตั้งครรภ์ในเส้นทางนี้</p>') +
+      (r.plan.length ? '<ul class="mt-2 list-disc pl-5 text-sm text-gray-700">' + r.plan.map(function (p) { return "<li>" + esc(p.condition) + ": " + esc(p.text) + "</li>"; }).join("") + "</ul>" : "") +
+      (r.targets.length ? '<h3 class="h3 mt-3">เป้าหมายก่อนตั้งครรภ์</h3><ul class="mt-1 list-disc pl-5 text-sm text-gray-700">' + r.targets.map(function (t) { return "<li>" + esc(t.text) + ' <span class="text-xs text-gray-400">(' + esc(t.condition) + ")</span></li>"; }).join("") + "</ul>" : "");
+    cards.push(listCard("ยาและเป้าหมาย", medBody));
+    cards.push(listCard("Lab / การตรวจ", r.labs.length ? '<div class="mt-2 flex flex-wrap gap-2">' + r.labs.map(function (l) { return '<span class="rounded-lg bg-white px-2 py-1 text-sm ring-1 ring-orange-100">' + esc(l) + "</span>"; }).join("") + "</div>" : '<p class="mt-2 text-gray-600">ไม่มี</p>'));
+    if (r.drugAlerts.length) cards.push(listCard("แจ้งเตือนยา", '<ul class="mt-2 space-y-2">' + r.drugAlerts.map(function (d) {
+      return '<li class="flex gap-2">' + pill(d.level) + '<div><div class="font-semibold text-gray-800">' + esc(d.name) + flagMark(d.review) + '</div><div class="text-sm text-gray-600">' + esc(d.alert) + (d.action ? " → " + esc(d.action) : "") + '</div><div class="text-xs text-gray-400">' + esc(d.src) + "</div></div></li>";
+    }).join("") + "</ul>"));
+    if (r.infos.length) cards.push(listCard("ข้อมูลประกอบ", '<ul class="mt-2 space-y-1 text-sm">' + r.infos.map(function (x) { return '<li class="text-gray-700">' + esc(x.label) + ' <span class="text-xs text-gray-400">' + esc(x.condition) + " · " + esc(x.src) + "</span></li>"; }).join("") + "</ul>"));
+    if (r.counseling.length) cards.push(listCard("คำแนะนำ", '<ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">' + r.counseling.map(function (c) { return "<li>" + esc(c.text) + ' <span class="text-xs text-gray-400">(' + esc(c.from) + ")</span></li>"; }).join("") + "</ul>", "md:col-span-2"));
+
+    h += '<div class="mt-4 grid gap-4 md:grid-cols-2">' + cards.join("") + "</div>";
+    h += '<div class="mt-4">' + mecBlock(r) + "</div>";
+    var note = E.buildNote(r, KB, new Date());
+    h += '<section class="card no-print mt-4"><div class="flex flex-wrap items-center gap-2"><button type="button" class="btn-primary" data-act="copy">คัดลอก note ลง HOSxP</button><button type="button" class="btn" data-act="print">พิมพ์ A4</button>' +
+      '<button type="button" class="btn" data-act="edit">แก้ไขข้อมูล</button><button type="button" class="btn" data-act="reset">เริ่มรายใหม่</button><span id="copyMsg" class="text-sm text-emerald-700" role="status"></span></div>' +
+      '<label class="lbl mt-4" for="noteBox">ข้อความ note (' + note.length + " ตัวอักษร)</label><textarea id=\"noteBox\" readonly class=\"inp h-56 w-full font-sans text-sm\">" + esc(note) + "</textarea></section>";
+    h += '<p class="mt-4 text-sm text-gray-500">เครื่องมือช่วยตัดสินใจ ไม่ใช้แทนดุลยพินิจแพทย์ · ผลนี้ไม่ถูกบันทึกไว้ที่ใด</p>';
+    return h;
+  }
+
+  function assessView() {
+    var body = S.step === 1 ? step1() : S.step === 2 ? step2() : S.step === 3 ? step3() : step4();
+    return stepper() + body;
+  }
+
+  /* ---------- reference ---------- */
+  var HEAD = { "class": "Class", desc: "รายละเอียด", risk: "ความเสี่ยง", examples: "ตัวอย่าง", care: "การดูแล", tsh: "TSH", action: "การรักษา", param: "ปัจจัย", onset: "อายุที่เริ่มเป็น", detail: "เกณฑ์น้ำตาล", treatment: "การรักษา", duration: "ระยะเวลา", vascular: "หลอดเลือด", level: "ระดับ", sign: "อาการ", hb: "Hb" };
+  var LISTHEAD = { clinical: "Clinical criteria", immunologic: "Immunologic criteria", symptoms: "อาการ", findings: "การตรวจร่างกาย" };
+  function toolRefCard(t) {
+    var h = '<section class="card scroll-mt-24" id="' + esc(t.id) + '"><h2 class="h2">' + esc(t.name) + '</h2><p class="hint">' + esc(t.src) + flagMark(t.review) + "</p>";
+    if (t.rule) h += '<p class="mt-2 text-gray-700">' + esc(t.rule) + "</p>";
+    if (t.type === "table") {
+      var keys = []; t.rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (keys.indexOf(k) < 0) keys.push(k); }); });
+      h += '<div class="mt-3 overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left text-gray-500">' + keys.map(function (k) { return '<th class="py-2 pr-3 font-semibold">' + esc(HEAD[k] || k) + "</th>"; }).join("") +
+        "</tr></thead><tbody>" + t.rows.map(function (r) { return '<tr class="border-t border-orange-100 align-top">' + keys.map(function (k) { return '<td class="py-2 pr-3">' + esc(r[k] || "") + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table></div>";
+    } else {
+      ["items", "clinical", "immunologic", "symptoms", "findings"].forEach(function (k) {
+        if (t[k]) h += (LISTHEAD[k] ? '<h3 class="h3 mt-3">' + LISTHEAD[k] + "</h3>" : "") + '<ul class="mt-2 list-disc space-y-1 pl-5 text-gray-700">' + t[k].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
+      });
+    }
+    return h + evidenceDetails(t.decision) + "</section>";
+  }
+  function mecMatrix() {
+    var head = KB.mec.methods.map(function (m) { return '<th class="px-1 py-2 text-center font-semibold">' + esc(E.METHOD_SHORT[m.id]) + "</th>"; }).join("");
+    var rows = KB.mec.rows.map(function (r) {
+      return '<tr class="border-t border-orange-100 align-top" data-mecrow="' + esc((r.id + " " + r.label).toLowerCase()) + '"><td class="py-2 pr-3"><span class="text-gray-800">' + esc(r.label) + "</span> " + decisionBadge(r.decision) + flagMark(r.review) +
+        '<span class="block text-xs text-gray-400">' + esc(r.src) + "</span></td>" + KB.mec.methods.map(function (m) { return '<td class="px-1 py-2 text-center">' + catBadge(r.cat[m.id]) + "</td>"; }).join("") + "</tr>";
+    }).join("");
+    var legend = [1, 2, 3, 4].map(function (c) { return '<span class="inline-flex items-center gap-1">' + catBadge(c) + '<span class="text-xs text-gray-600">' + esc(KB.mec.categories[c]) + "</span></span>"; }).join(" ");
+    return '<section class="card scroll-mt-24" id="ref-mec"><div class="flex flex-wrap items-center justify-between gap-2"><h2 class="h2">ตาราง MEC</h2><input type="search" class="inp w-full sm:w-64" placeholder="ค้นหาภาวะ" data-input="mecFilter" aria-label="ค้นหาภาวะ"></div>' +
+      '<p class="hint">' + esc(KB.mec.combine_rule) + " · " + esc(KB.meta.mec_reference ? KB.meta.mec_reference.interim : "") + '</p><div class="mt-2 flex flex-wrap gap-3">' + legend + "</div>" +
+      '<div class="mt-3 overflow-x-auto"><table class="w-full min-w-[640px] text-sm"><thead><tr class="text-left text-gray-500"><th class="py-2 pr-3 font-semibold">ภาวะ</th>' + head + "</tr></thead><tbody>" + rows + "</tbody></table></div></section>";
+  }
+  function vaccinesCard() {
+    var v = KB.vaccines, d = v.dT;
+    function block(title, o) { return '<div class="mt-4"><h3 class="h3">' + title + '</h3><p class="mt-1 text-gray-700">' + esc(o.text) + '</p><p class="hint">' + esc(o.src) + "</p>" + evidenceDetails(o.decision) + "</div>"; }
+    return '<section class="card scroll-mt-24" id="ref-vac"><h2 class="h2">วัคซีน</h2><h3 class="h3 mt-3">dT ตามประวัติวัคซีน</h3><div class="mt-2 overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left text-gray-500"><th class="py-2 pr-3 font-semibold">ประวัติ</th><th class="py-2 pr-3 font-semibold">ให้</th><th class="py-2 font-semibold">จากนั้น</th></tr></thead><tbody>' +
+      d.rules.map(function (r) { return '<tr class="border-t border-orange-100 align-top"><td class="py-2 pr-3">' + esc(r.history) + '</td><td class="py-2 pr-3">' + esc(r.give) + '</td><td class="py-2">' + esc(r.then || "—") + "</td></tr>"; }).join("") +
+      '</tbody></table></div><p class="hint mt-2">' + esc(d.note) + " · " + esc(d.src) + "</p>" + block("ไอกรน (aP / Tdap)", v.aP) + block("ไข้หวัดใหญ่", v.influenza) + block("โควิด-19", v.covid19) + "</section>";
+  }
+  function refView() {
+    var tools = KB.tools.filter(function (t) { return t.type === "table" || t.type === "list"; });
+    var nav = [["ref-mec", "ตาราง MEC"], ["ref-vac", "วัคซีน"]].concat(tools.map(function (t) { return [t.id, t.name]; }));
+    return '<div class="grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)]"><nav class="no-print self-start lg:sticky lg:top-24" aria-label="หัวข้ออ้างอิง"><ul class="flex flex-wrap gap-2 lg:flex-col lg:gap-1">' +
+      nav.map(function (n) { return '<li><a href="#/ref" data-jump="' + esc(n[0]) + '" class="block rounded-lg px-2 py-1 text-sm text-gray-600 hover:bg-orange-50">' + esc(n[1]) + "</a></li>"; }).join("") +
+      '</ul></nav><div class="min-w-0 space-y-5">' + mecMatrix() + vaccinesCard() + tools.map(toolRefCard).join("") + "</div></div>";
+  }
+
+  /* ---------- tools ---------- */
+  function scoreCard(t) {
+    return '<section class="card" data-tool="' + esc(t.id) + '"><div class="flex flex-wrap items-baseline justify-between gap-2"><h2 class="h2">' + esc(t.name) + "</h2>" +
+      (t.scope === "COULD" ? '<span class="rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600">บท 4.2 · ใช้ประกอบ</span>' : "") + '</div><p class="hint">' + esc(t.src) + (t.decision ? " · ยืนยันการแก้ตาม " + esc(t.decision.cd) : "") + "</p>" +
+      '<div class="mt-3 space-y-3">' + t.items.map(function (it, i) {
+        var zero = it.options.findIndex(function (o) { return o[1] === 0; });
+        return '<label class="block"><span class="lbl">' + esc(it.param) + '</span><select class="inp w-full" data-act="score" data-i="' + i + '">' +
+          it.options.map(function (o, j) { return '<option value="' + o[1] + '"' + (j === (zero < 0 ? 0 : zero) ? " selected" : "") + ">" + esc(o[0]) + " (" + o[1] + ")</option>"; }).join("") + "</select></label>";
+      }).join("") + '</div><div class="mt-4 rounded-xl bg-orange-50 p-3"><span class="text-sm text-gray-500">คะแนนรวม</span> <b class="text-2xl text-orange-700" data-total>0</b><span class="block text-sm text-gray-800" data-interp></span></div></section>';
+  }
+  function updateScore(card) {
+    if (!card) return;
+    var t = KB.tools.find(function (x) { return x.id === card.dataset.tool; });
+    var total = 0; card.querySelectorAll("select").forEach(function (s) { total += Number(s.value) || 0; });
+    var rules = (t.interpret || []).slice().sort(function (a, b) { return b[0] - a[0]; });
+    var hit = rules.find(function (r) { return total >= r[0]; });
+    card.querySelector("[data-total]").textContent = total;
+    card.querySelector("[data-interp]").textContent = hit ? hit[1] : "";
+  }
+  function dtCard() {
+    var d = KB.vaccines.dT;
+    return '<section class="card" data-dt><h2 class="h2">กำหนดการวัคซีน dT</h2><p class="hint">' + esc(d.src) + '</p><fieldset class="mt-3 space-y-2"><legend class="lbl">' + esc(d.question) + "</legend>" +
+      d.rules.map(function (r) { return '<label class="chk"><input type="radio" name="dt" value="' + r.id + '" data-act="dt" class="mt-1 h-5 w-5 shrink-0 accent-orange-500"><span class="text-gray-800">' + esc(r.history) + "</span></label>"; }).join("") +
+      '</fieldset><div class="mt-4 rounded-xl bg-orange-50 p-3 text-gray-800" id="dtOut">เลือกประวัติวัคซีนเพื่อดูกำหนดการ</div><p class="hint mt-3">' + esc(d.note) + '</p><p class="mt-3 text-sm text-gray-700"><b>aP:</b> ' + esc(KB.vaccines.aP.text) + "</p></section>";
+  }
+  function updateDT() {
+    var sel = document.querySelector('input[name="dt"]:checked'); if (!sel) return;
+    var r = KB.vaccines.dT.rules.find(function (x) { return x.id === sel.value; });
+    document.getElementById("dtOut").innerHTML = "<b>" + esc(r.give) + "</b>" + (r.then ? '<span class="block text-sm text-gray-600">จากนั้น ' + esc(r.then) + "</span>" : "");
+  }
+  function toolsView() {
+    return '<div class="grid gap-5 lg:grid-cols-2">' + dtCard() + KB.tools.filter(function (t) { return t.type === "score"; }).map(scoreCard).join("") + "</div>";
+  }
+
+  /* ---------- KB viewer ---------- */
+  function kbItem(o, level, sub) {
+    var txt = (o.id + " " + (o.label || o.name) + " " + (sub || "")).toLowerCase();
+    return '<div class="rounded-xl border border-orange-100 bg-white/70 p-3" data-kbitem data-level="' + (level || "") + '" data-flag="' + (o.review ? 1 : 0) + '" data-dec="' + (o.decision ? 1 : 0) + '" data-text="' + esc(txt) + '">' +
+      '<div class="flex flex-wrap items-center gap-2">' + (level ? pill(level) : "") + '<span class="text-xs font-semibold text-gray-400">' + esc(o.id) + "</span>" + decisionBadge(o.decision) +
+      (o.review ? '<span class="rounded bg-amber-100 px-1.5 text-[11px] font-semibold text-amber-800">' + esc(o.review.flag) + "</span>" : "") + "</div>" +
+      '<div class="mt-1 text-gray-800">' + esc(o.label || o.name) + "</div>" + (sub ? '<div class="text-sm text-gray-600">' + esc(sub) + "</div>" : "") +
+      '<div class="text-xs text-gray-400">' + esc(o.src || "") + "</div>" + (o.review ? '<p class="mt-1 text-xs text-amber-700">' + esc(o.review.note) + "</p>" : "") + evidenceDetails(o.decision) + "</div>";
+  }
+  function catString(cat) { return KB.mec.methods.map(function (m) { return E.METHOD_SHORT[m.id] + " " + cat[m.id]; }).join(" · "); }
+  function kbView() {
+    var m = KB.meta, nCrit = KB.conditions.reduce(function (n, c) { return n + c.criteria.length; }, 0);
+    var counts = [["โรค", KB.conditions.length], ["เกณฑ์", nCrit], ["แถว MEC", KB.mec.rows.length], ["แจ้งเตือนยา", KB.drug_alerts.length], ["เครื่องมือ", KB.tools.length]];
+    var ds = m.decisions_source || {};
+    var meta = '<section class="card"><div class="flex flex-wrap items-center gap-3"><h2 class="h2">Knowledge base</h2>' + pill(m.status === "APPROVED" ? "GREEN" : "YELLOW").replace(/GREEN|YELLOW/, esc(m.status)) + "</div>" +
+      '<dl class="mt-3 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2"><div><dt class="text-gray-500">เวอร์ชัน</dt><dd class="font-semibold text-gray-800">' + esc(m.version) + "</dd></div>" +
+      '<div><dt class="text-gray-500">ผู้รับรองทางคลินิก</dt><dd class="font-semibold text-gray-800">' + esc(m.reviewed_by || "ยังไม่ระบุ") + "</dd></div>" +
+      '<div><dt class="text-gray-500">บันทึกคำตัดสิน</dt><dd class="text-gray-800">' + esc((ds.document || "-") + " · " + (ds.date || "-")) + "</dd></div>" +
+      '<div><dt class="text-gray-500">MEC อ้างอิง</dt><dd class="text-gray-800">' + esc(m.mec_reference ? m.mec_reference.policy + " (" + m.mec_reference.status + ")" : "-") + "</dd></div>" +
+      '<div class="sm:col-span-2"><dt class="text-gray-500">แหล่งเนื้อหา</dt><dd class="text-gray-800">' + esc(m.source.title_th) + "</dd></div>" +
+      '<div class="sm:col-span-2"><dt class="text-gray-500">SHA-256 ของ kb.json</dt><dd class="break-all font-mono text-xs text-gray-700">' + esc(SHA) + "</dd></div></dl>" +
+      '<div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">' + counts.map(function (c) { return '<div class="rounded-xl bg-white/80 p-3 ring-1 ring-orange-100"><div class="text-2xl font-bold text-gray-800">' + c[1] + '</div><div class="text-xs text-gray-500">' + c[0] + "</div></div>"; }).join("") + "</div></section>";
+    var pend = (m.pending || []).length ? '<section class="card"><h2 class="h2">งานค้าง</h2><ul class="mt-2 space-y-2 text-sm">' + m.pending.map(function (p) {
+      return '<li class="flex gap-2"><span class="shrink-0 rounded px-1.5 text-xs font-semibold ' + (p.blocking ? "bg-rose-100 text-rose-700" : "bg-slate-100 text-slate-600") + '">' + (p.blocking ? "ต้องทำก่อน APPROVED" : "ไม่ block") + '</span><span class="text-gray-800">' + esc(p.id + " · " + p.cd + " — " + p.task) + "</span></li>";
+    }).join("") + "</ul></section>" : "";
+    var filters = '<div class="no-print flex flex-wrap items-center gap-3"><input id="kbSearch" type="search" class="inp w-full sm:w-72" placeholder="ค้นหา id หรือข้อความ" data-input="kbSearch" aria-label="ค้นหาใน KB">' +
+      '<select id="kbLevel" class="inp" data-act="kbfilter" aria-label="กรองระดับ"><option value="">ทุกระดับ</option><option>RED</option><option>YELLOW</option><option>INFO</option></select>' +
+      '<label class="flex items-center gap-2 text-sm"><input id="kbFlag" type="checkbox" data-act="kbfilter" class="h-5 w-5 accent-orange-500">เฉพาะที่รอทบทวน</label>' +
+      '<label class="flex items-center gap-2 text-sm"><input id="kbDec" type="checkbox" data-act="kbfilter" class="h-5 w-5 accent-orange-500">เฉพาะที่มีคำตัดสิน</label><span id="kbCount" class="text-sm text-gray-500"></span></div>';
+    var crit = KB.conditions.map(function (c) {
+      return '<h3 class="h3 mt-5">' + esc(c.label) + '</h3><div class="mt-2 grid gap-2 md:grid-cols-2">' + c.criteria.map(function (cr) { return kbItem(cr, cr.level, cr.action || cr.counsel || ""); }).join("") + "</div>";
+    }).join("");
+    var mods = '<h3 class="h3 mt-5">ข้อมูลทั่วไป</h3><div class="mt-2 grid gap-2 md:grid-cols-2">' + KB.general_modifiers.map(function (g) { return kbItem(g, g.level, g.counsel || ""); }).join("") + "</div>";
+    var rows = '<h3 class="h3 mt-5">แถว MEC</h3><div class="mt-2 grid gap-2 md:grid-cols-2">' + KB.mec.rows.map(function (r) { return kbItem(r, "", catString(r.cat) + (r.note ? " · " + r.note : "")); }).join("") + "</div>";
+    var drugs = '<h3 class="h3 mt-5">แจ้งเตือนยา</h3><div class="mt-2 grid gap-2 md:grid-cols-2">' + KB.drug_alerts.map(function (d) { return kbItem(d, d.level, d.alert + (d.action ? " → " + d.action : "")); }).join("") + "</div>";
+    var oos = '<section class="card"><h2 class="h2">นอกขอบเขต</h2><ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">' + m.out_of_scope.map(function (o) { return "<li>บท " + esc(o.chapter) + " " + esc(o.topic) + " — " + esc(o.reason) + "</li>"; }).join("") + "</ul></section>";
+    return '<div class="space-y-5">' + meta + pend + '<section class="card"><h2 class="h2">Rule ทั้งหมด</h2><div class="mt-3">' + filters + "</div>" + crit + mods + rows + drugs + "</section>" + oos + "</div>";
+  }
+  function applyKbFilter() {
+    var q = ((document.getElementById("kbSearch") || {}).value || "").trim().toLowerCase();
+    var lv = (document.getElementById("kbLevel") || {}).value || "";
+    var fl = (document.getElementById("kbFlag") || {}).checked, dc = (document.getElementById("kbDec") || {}).checked, n = 0;
+    document.querySelectorAll("[data-kbitem]").forEach(function (el) {
+      var ok = (!q || el.dataset.text.indexOf(q) >= 0) && (!lv || el.dataset.level === lv) && (!fl || el.dataset.flag === "1") && (!dc || el.dataset.dec === "1");
+      el.hidden = !ok; if (ok) n++;
+    });
+    var c = document.getElementById("kbCount"); if (c) c.textContent = "แสดง " + n + " รายการ";
+  }
+
+  /* ---------- error view (BR-15) ---------- */
+  function errorView() {
+    return '<section class="card border-rose-300"><h2 class="h2 text-rose-700">KB ไม่ผ่านการตรวจสอบ — ระบบปิดการประเมิน</h2><ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-gray-700">' +
+      KB_ERRORS.map(function (e) { return "<li>" + esc(e) + "</li>"; }).join("") + "</ul><p class=\"hint mt-3\">แก้ kb.json แล้วรัน node tools/build.js ใหม่</p></section>";
+  }
+
+  /* ---------- render & events ---------- */
+  function currentRoute() { var r = (location.hash.replace(/^#\/?/, "") || "assess").split("/")[0]; return ["assess", "ref", "tools", "kb"].indexOf(r) >= 0 ? r : "assess"; }
+  function render() {
+    var route = currentRoute();
+    document.querySelectorAll("[data-route]").forEach(function (a) { var on = a.dataset.route === route; a.classList.toggle("tab-on", on); if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (KB_ERRORS.length) { app.innerHTML = errorView(); return; }
+    app.innerHTML = route === "ref" ? refView() : route === "tools" ? toolsView() : route === "kb" ? kbView() : assessView();
+    if (route === "tools") document.querySelectorAll("[data-tool]").forEach(updateScore);
+    if (route === "kb") applyKbFilter();
+  }
+  function top() { window.scrollTo(0, 0); }
+
+  function copyNote() {
+    var box = document.getElementById("noteBox"), msg = document.getElementById("copyMsg");
+    if (!box) return;
+    function done(ok) { if (msg) msg.textContent = ok ? "คัดลอกแล้ว — วางใน HOSxP ได้เลย" : "เลือกข้อความให้แล้ว กด Ctrl+C เพื่อคัดลอก"; }
+    function fallback() { box.focus(); box.select(); var ok = false; try { ok = document.execCommand("copy"); } catch (e) { ok = false; } done(ok); }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(box.value).then(function () { done(true); }, fallback);
+    else fallback();
+  }
+
+  document.addEventListener("click", function (e) {
+    var j = e.target.closest("a[data-jump]");
+    if (j) { e.preventDefault(); var t = document.getElementById(j.dataset.jump); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    var b = e.target.closest("button[data-act]");
+    if (!b || b.disabled || !app.contains(b)) return;
+    var a = b.dataset.act, v = b.dataset.v;
+    switch (a) {
+      case "preg": S.pregnant = v === "1"; if (S.pregnant) { S.intention = null; S.everSex = null; } else S.ga = null; break;
+      case "intent": S.intention = v; if (v !== "NO") S.everSex = null; break;
+      case "sex": S.everSex = v === "1"; break;
+      case "cond":
+        toggle(S.conditions, v);
+        var on = S.conditions.indexOf(v) >= 0;
+        if (!on) { var c = KB.conditions.find(function (x) { return x.id === v; }); (c ? c.criteria : []).forEach(function (cr) { delete S.criteria[cr.id]; }); }
+        b.classList.toggle("opt-on", on); b.setAttribute("aria-pressed", on); return;
+      case "tri":
+        S.criteria[b.dataset.id] = v === "true" ? true : v === "unknown" ? "unknown" : false;
+        b.parentElement.querySelectorAll("button").forEach(function (x) { var o = x === b; x.classList.toggle("seg-on", o); x.setAttribute("aria-pressed", o); });
+        return;
+      case "next": if (S.step === 1 && !step1Valid()) return; S.step = Math.min(4, S.step + 1); S.maxStep = Math.max(S.maxStep, S.step); render(); top(); return;
+      case "back": S.step = Math.max(1, S.step - 1); render(); top(); return;
+      case "goto": var n = Number(v); if (n <= S.maxStep) { S.step = n; render(); top(); } return;
+      case "edit": S.step = 2; render(); top(); return;
+      case "reset": if (!window.confirm("เริ่มประเมินรายใหม่? ข้อมูลของรายนี้จะถูกล้าง")) return; S = newState(); render(); top(); return;
+      case "copy": copyNote(); return;
+      case "print": window.print(); return;
+      default: return;
+    }
+    render();
+  });
+
+  app.addEventListener("change", function (e) {
+    var t = e.target, a = t.dataset && t.dataset.act; if (!a) return;
+    if (a === "mod") toggle(S.modifiers, t.dataset.v);
+    else if (a === "crit") S.criteria[t.dataset.v] = t.checked;
+    else if (a === "drug") toggle(S.drugs, t.dataset.v);
+    else if (a === "score") { updateScore(t.closest("[data-tool]")); return; }
+    else if (a === "dt") { updateDT(); return; }
+    else if (a === "kbfilter") { applyKbFilter(); return; }
+    else return;
+    var lab = t.closest("label"); if (lab) lab.classList.toggle("chk-on", t.checked);
+  });
+
+  app.addEventListener("input", function (e) {
+    var t = e.target, k = t.dataset && t.dataset.input; if (!k) return;
+    var q = (t.value || "").trim().toLowerCase();
+    if (k === "ga") { var n = parseInt(t.value, 10); S.ga = isFinite(n) ? n : null; var nb = document.getElementById("nextBtn"); if (nb) nb.disabled = !step1Valid(); }
+    else if (k === "drugFilter") document.querySelectorAll("#drugList [data-drug]").forEach(function (el) { el.hidden = !!q && el.dataset.drug.indexOf(q) < 0; });
+    else if (k === "mecFilter") document.querySelectorAll("[data-mecrow]").forEach(function (el) { el.hidden = !!q && el.dataset.mecrow.indexOf(q) < 0; });
+    else if (k === "kbSearch") applyKbFilter();
+  });
+
+  if (KB && KB.meta.status !== "APPROVED") {
+    document.getElementById("kbBanner").innerHTML = '<div class="bg-amber-100 text-sm text-amber-900"><div class="mx-auto max-w-6xl px-4 py-2">KB v' + esc(KB.meta.version) + " · สถานะ " + esc(KB.meta.status) +
+      " — ยังไม่ผ่านการรับรองทางคลินิก ห้ามใช้ตัดสินใจกับผู้ป่วยจริง</div></div>";
+  }
+  window.addEventListener("hashchange", function () { render(); top(); });
+  render();
+})();
+</script>
+</body>
+</html>
